@@ -1,0 +1,37 @@
+.register-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background-color: brown;
+    width: 300px;
+    height: 200px;
+    border: 5px solid burlywood;
+    border-radius: 10px;
+    box-shadow: 0 1px 8px rgba(0, 0, 0, 3);
+}
+
+.register-box {
+    padding: 2px;
+    border: 1px solid burlywood;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #333;
+    outline: none;
+    margin: 3px 0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5)
+}
+
+h2{
+    position: absolute;
+    top: 25%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+  
