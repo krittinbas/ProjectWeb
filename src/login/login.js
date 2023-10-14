@@ -1,18 +1,25 @@
 import "./login.css";
 import { useRef } from "react";
 import { url_myAPI } from "../config";
+import React, { useState } from 'react';
+import Cookies from 'js-cookie';
+
 function Login() {
+
     const email = useRef("")
     const check = useRef(null)
     const pass = useRef("")
+
+    const [rememberMe, setRememberMe] = useState(false);
+
     let email1
     let user
     let id
     const login = (e) => {
         e.preventDefault();
         const formData = new URLSearchParams();
-        formData.append('email', email);
-        formData.append('password', pass);
+        formData.append('email', email.current.value);
+        formData.append('password', pass.current.value);
         fetch(`${url_myAPI}/login`, {
             method: 'POST',
             headers: {
@@ -28,6 +35,11 @@ function Login() {
                 email1=data.email
                 user = data.user
                 id = data.id
+                if (rememberMe) {
+                    Cookies.set('remembered-username', user, { expires: 7 });
+                    Cookies.set('remembered-password', id, { expires: 7 });
+                }
+        
             }
         })
     }
@@ -35,7 +47,7 @@ function Login() {
         <div className="body">
             <div className="header">
                 <h1 className="logo">
-                    Korn
+                    
                 </h1>
             </div>
             <div className="wrapepr">
@@ -54,9 +66,9 @@ function Login() {
                         </div>
                         <div className="remember-forgot">
                             <label>
-                                <input type="checkbox" ref={check} onClick={()=>console.log(check)}/>
+                                <input type="checkbox" checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}/>
                                 Remember me
-
                             </label> <a href='#'>Forgot Password</a>
                         </div>
                         <button type="submit" className="btn">
