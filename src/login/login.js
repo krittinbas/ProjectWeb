@@ -2,6 +2,7 @@ import "./login.css";
 
 
 function Login() {
+    
     return (
         <div className="body">
             <div className="header">
@@ -10,7 +11,7 @@ function Login() {
                 </h1>
             </div>
             <div className="wrapepr">
-                <div className="from-box login">
+                <div className="form-box">
                     <h2>Login</h2>
                     <form>
                         <div className="input-box">
@@ -19,9 +20,28 @@ function Login() {
                             <label>Email</label>
                         </div>
                         <div className="input-box">
-                            <span className="icon"></span>
+                            <span className="icon">
+                            </span>
                             <input type="password" />
                             <label>password</label>
+                        </div>
+                        <div className = "remember-forgot">
+                            <label>
+                                <input type = "checkbox"/>
+                                Remember me
+                               
+                            </label> <a href = '#'>Forgot Password</a>
+                        </div>
+                        <button type = "submit" className = "btn">
+                            Login
+                        </button>
+                        <div className = "login-register">
+                            <p>
+                                Don't have an accout?
+                                <a href = "#" className = "register-link">
+                                    Register
+                                </a>
+                            </p>
                         </div>
                     </form>
                 </div>

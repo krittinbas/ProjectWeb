@@ -12,10 +12,9 @@
     top: 0;
     width: 100%;
     padding: 20px 100px;
-    background-color: aqua;
     justify-content: center;
     align-items: center;
-    display: flex;   
+    display: flex;
 }
 
 .body{
@@ -30,7 +29,7 @@
 
 .logo{
     font-size: 2em;
-    color: white;
+    color: chocolate;
     user-select: none;
 }
 
@@ -78,5 +77,159 @@ transform: scale(1);
 
 .navigation ,.btnLogin-popup:hover{
     background: white;
-    color: saddlebrown;
+    color:chocolate;
 }
+
+.wrapepr{
+    position: relative;
+    width: 400px;
+    height: 400px;
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 20px;
+    backdrop-filter: blur(15px);
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.wrapepr .form-box{
+    width: 100%;
+    padding: 40px;
+}
+
+.form-box h2{
+    font-size: 2em;
+    color: chocolate;
+    text-align: center;
+}
+
+.input-box{
+    position: relative;
+    width: 100%;
+    height: 50px;
+    border-bottom: 2px solid chocolate;
+    margin: 30px 0;
+    color: rgb(242, 158, 98);
+}
+
+.input-box label{
+    position: absolute;
+    top: 50%;
+    left: 5px;
+    transform: translateY(-50%);
+    font-size: 1em;
+    color: chocolate;
+    font-weight: 500;
+    pointer-events: none;
+    transition: .5s;
+}
+
+.input-box input:focus~label{
+    top:-5px;
+}
+
+.input-box input{
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    color: rgb(242, 158, 98);
+    font-weight: 600;
+    padding: 0 35px 0 5px;
+}
+
+
+
+.input-box .icon{
+    position: absolute;
+    right: 8px;
+    font-size: 1.2em;
+    color: chocolate;
+    line-height: 57px;
+
+}
+
+.remember-forgot{
+    font-size: .9em;
+    color: chocolate;
+    font-weight: 500;
+    margin: -15px 0 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.remember-forgot label input{
+    accent-color: chocolate;
+    margin-right: 3px;
+}
+
+.remember-forgot a{
+    color: chocolate;
+    text-decoration: none;
+}
+
+.remember-forgot a:hover{
+    text-decoration: underline;
+}
+
+.btn{
+    width: 100%;
+    height: 45px;
+    background: chocolate;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: black;
+    font-weight: 500;
+}
+
+.login-register{
+    font-size: .9em;
+    color:black;
+    text-align: center;
+    font-weight: 500;
+    margin: 25px 0 10px;
+}
+
+.login-register p a{
+    color: chocolate;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.login-register p a:hover{
+    text-decoration: underline;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
