@@ -9,7 +9,7 @@ const ForgotPasswordPage = () => {
 
   return (
     <div>
-      <h1>ลืมรหัสผ่าน</h1>
+      <h1>Forget Password</h1>
       <ForgotPasswordForm onSubmit={handleForgotPassword} />
     </div>
   );

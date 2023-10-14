@@ -5,8 +5,20 @@ const ForgotPasswordForm = ({ onSubmit }) => {
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
+  const isValidEmail = (value) => {
+    // Regular Expression สำหรับตรวจสอบรูปแบบของอีเมลล์
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (!isValidEmail(email)) {
+      alert('กรุณาใส่อีเมลล์ให้ถูกต้อง');
+      return;
+    }
+
     // ตรวจสอบว่ารหัสผ่านใหม่และการยืนยันรหัสผ่านตรงกันหรือไม่
     if (newPassword === confirmPassword) {
       onSubmit({ email, newPassword });
@@ -26,7 +38,7 @@ const ForgotPasswordForm = ({ onSubmit }) => {
         />
       </label>
       <label>
-        รหัสผ่านใหม่:
+        New password:
         <input
           type="password"
           value={newPassword}
@@ -34,14 +46,14 @@ const ForgotPasswordForm = ({ onSubmit }) => {
         />
       </label>
       <label>
-        ยืนยันรหัสผ่านใหม่:
+        Confirm New password:
         <input
           type="password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </label>
-      <button type="submit">ส่ง</button>
+      <button type="submit">Confirm</button>
     </form>
   );
 };
