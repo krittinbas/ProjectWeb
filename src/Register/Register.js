@@ -10,7 +10,7 @@ export default function Register() {
                 <input className="register-box" placeholder="password!"></input>
                 <input className="register-box" placeholder="confirm password!"></input>
 
-                <button type="submit" className="register-box">
+                <button type="submit" className="register-button">
                     register!
                 </button>
             </div>
