@@ -1,7 +1,6 @@
 package main
 
 import (
-	config "API/ConfigRead"
 	mydb "API/MyDatabase"
 	"API/encode"
 	"database/sql"
@@ -11,7 +10,6 @@ import (
 )
 
 var Db *sql.DB
-var myConfig config.Config
 
 func main() {
 	r := gin.Default()
@@ -21,9 +19,10 @@ func main() {
 		fmt.Println("Error Database Connection!")
 	}
 	r.Use(CORSMiddleware())
-	fmt.Println(myConfig)
+
 	r.POST("/login", loginHandler)
-	r.PORT("registor")
+	r.POST("/registor", registor)
+	r.POST("/forgetpass", Forgetpass)
 	r.Run(":1266")
 
 }
@@ -82,4 +81,15 @@ func registor(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"data": "success register"})
+}
+func Forgetpass(c *gin.Context) {
+	email := encode.Encode(c.PostForm("email"))
+	password := c.PostForm("password")
+	query1 := "UPDATE accounts SET password = ?	WHERE email = ?"
+	getRow := Db.QueryRow(query1, password, email)
+	if getRow.Err() != nil {
+		c.JSON(400, gin.H{"error": "not found Email"})
+		return
+	}
+	c.JSON(200, gin.H{"data": "success"})
 }
