@@ -1,7 +1,8 @@
 package main
 
 import (
-	mydb "API/MyDatabase"
+	mydb "API/Database"
+	"API/configs"
 	"API/encode"
 	"database/sql"
 	"fmt"
@@ -12,6 +13,7 @@ import (
 var Db *sql.DB
 
 func main() {
+	fmt.Println(configs.DatabaseName)
 	r := gin.Default()
 	var err error
 	Db, err = mydb.GetDB()
