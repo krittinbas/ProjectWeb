@@ -13,7 +13,6 @@ import (
 var Db *sql.DB
 
 func main() {
-	fmt.Println(configs.DatabaseName)
 	r := gin.Default()
 	var err error
 	Db, err = mydb.GetDB()
@@ -25,7 +24,7 @@ func main() {
 	r.POST("/login", loginHandler)
 	r.POST("/registor", registor)
 	r.POST("/forgetpass", Forgetpass)
-	r.Run(":1266")
+	r.Run(":" + configs.PortAPI)
 
 }
 func CORSMiddleware() gin.HandlerFunc {

@@ -1,13 +1,16 @@
 package Database
 
 import (
+	"API/configs"
 	"database/sql"
+	"fmt"
 
 	_ "github.com/go-sql-driver/mysql"
 )
 
 func GetDB() (*sql.DB, error) {
-	dsn := "root:Yongkeat12+@tcp(localhost:3306)/korn2" // แก้ไขเป็นข้อมูลจริง
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", configs.Usernamedatabase, configs.Passworddatabase, configs.IPdatabase, configs.Portdatabase, configs.DatabaseName)
+
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
 		return nil, err
