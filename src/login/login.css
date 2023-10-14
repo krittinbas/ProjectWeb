@@ -1,0 +1,82 @@
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins';
+}
+
+.header {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    padding: 20px 100px;
+    background-color: aqua;
+    justify-content: center;
+    align-items: center;
+    display: flex;   
+}
+
+.body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background: url('./wallpaper/bgtest.jpg') no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+.logo{
+    font-size: 2em;
+    color: white;
+    user-select: none;
+}
+
+.navigation{
+    position: relative;
+    font-size: 1.1em;
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation a::after{
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -6px;
+    width: 100%;
+    height: 3px;
+    background: white;
+    border-radius: 5px;
+    transform: scale(0);
+    transform-origin: right;
+    transition: transfrom .5s;
+}
+
+.navigation a:hover::after{
+    transform-origin: left;
+transform: scale(1);
+}
+
+.navigation .btnLogin-popup{
+    width: 130px;
+    height: 50px;
+    background: transparent;
+    border: 2px solid white;
+    outline: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1.1em;
+    color: white;
+    font-weight: 500;
+    margin-left: 40px;
+}
+
+.navigation ,.btnLogin-popup:hover{
+    background: white;
+    color: saddlebrown;
+}
