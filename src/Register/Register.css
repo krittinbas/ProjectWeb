@@ -27,6 +27,9 @@
     margin: 3px 0;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5)
 }
+.register-box:hover{
+    border: 1px solid chocolate;
+}
 
 h2{
     position: absolute;
@@ -34,4 +37,48 @@ h2{
     left: 50%;
     transform: translate(-50%, -50%);
 }
-  
+
+.register-button {
+  appearance: none;
+  background-color: #ffffff;
+  border: 1px solid rgba(27, 31, 35, .15);
+  border-radius: 6px;
+  box-shadow: rgba(27, 31, 35, .1) 0 1px 0;
+  box-sizing: border-box;
+  color: #333;
+  cursor: pointer;
+  display: inline-block;
+  font-family: -apple-system,system-ui,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji";
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 20px;
+  margin: 4px;
+  padding: 1px, 20px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  white-space: nowrap;
+}
+
+.register-button:focus:not(:focus-visible):not(.focus-visible) {
+  box-shadow: none;
+  outline: none;
+}
+
+.register-button:hover {
+  background-color: rgb(255, 140, 58);
+}
+
+.register-button:focus {
+  box-shadow: cho 0 0 0 3px;
+  outline: none;
+}
+
+.register-button:active {
+  background-color: #298e46;
+  box-shadow: rgba(20, 70, 32, .2) 0 1px 0 inset;
+}
