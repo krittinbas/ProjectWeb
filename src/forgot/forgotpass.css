@@ -1,0 +1,75 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('./wallpaper/bgtest.jpg'); /* เปลี่ยนเป็น URL ที่ถูกต้อง */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .container {
+    max-width: 800px;
+    width: 100%;
+    padding: 40px; /* ปรับขนาดของ padding */
+    background-color: rgba(255, 255, 255, 0.9); /* เพิ่มความโปร่งแสง */
+    border-radius: 16px; /* ปรับขนาดของ border-radius */
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.2); /* เพิ่มเงา */
+  }
+  
+  h1 {
+    color: chocolate; /* สีตัวหนังสือ */
+    font-size: 32px; /* ปรับขนาดตัวหนังสือ */
+    margin-bottom: 20px;
+  }
+  
+  form {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 10px;
+    color: chocolate;
+    text-align: left;
+  }
+  
+  input {
+    width: 100%;
+    padding: 15px; /* ปรับขนาดของ padding */
+    margin-bottom: 20px; /* ปรับขนาดของ margin-bottom */
+    box-sizing: border-box;
+    color: #442b1d;
+  }
+  
+  button {
+    background-color: #d35400;
+    color: #fff;
+    padding: 20px 25px; /* ปรับขนาดของ padding */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    font-size: 18px; /* ปรับขนาดตัวหนังสือ */
+  }
+  
+  button:hover {
+    background-color: green;
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 600px) {
+    form {
+      width: 90%;
+    }
+  }
+  
