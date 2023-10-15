@@ -9,7 +9,7 @@ function Item_key_manger(props) {
     let hostkey = props.keyData["isHost"];
     let idaccountkey = props.keyData["id"];
     const [buttonChoose, setbuttonChoose] = useState(0);
-    const [errorMessage,setErrorMessage] = useState("");
+    const [errorMessage, setErrorMessage] = useState("");
     if (!hostkey) {
         codeKey = "(host) " + codeKey;
     }
@@ -21,23 +21,28 @@ function Item_key_manger(props) {
             </div>
             <a>{codeKey}</a>
             <div className="groupButton">
-                <button className="g" id="g" onClick={() => {setbuttonChoose(1);setErrorMessage("")}}>change name</button>
-                {hostkey === true && <button className="b" id="b" onClick={() => {setbuttonChoose(2);setErrorMessage("");window.location.search=window.location.search.replace("page=1","page=2")}}>manager</button>}
+                <button className="g" id="g" onClick={() => { setbuttonChoose(1); setErrorMessage("") }}>change name</button>
+                {hostkey === true && <button className="b" id="b" onClick={() => { setbuttonChoose(2); setErrorMessage(""); window.location.search = window.location.search.replace("page=1", "page=2") }}>manager</button>}
                 <button className="r" id="r"
                     onClick={() => {
                         setErrorMessage("");
                         setbuttonChoose(3);
-                        if(!hostkey && (window.confirm("Are you sure to disconnect is key?"))){
-                            // fetch(url_myAPI+`/disconectkey?idaccount=${props.idac}&&idkey=${idkey}&name=${props.name}`)
-                            // .then(response => response.json())
-                            // .then(data=>{
-                            //     if(data.status){
-                            //         window.location.reload();
-                            //     }else{
-                            //         setErrorMessage(data.error);
-                            //     }
-                            // })
-                        }else if(hostkey){
+                        if (!hostkey && (window.confirm("Are you sure to disconnect is key?"))) {
+                            const formData = new URLSearchParams();
+                            formData.append('idaccountkey', idaccountkey);
+                            fetch(`${url_myAPI}/disconnectkey`, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/x-www-form-urlencoded'
+                                },
+                                body: formData.toString()
+                            })
+                            .then(re => re.json())
+                            .then(data => {
+                                alert(data.data)
+                                window.location.reload();
+                            })
+                        } else if (hostkey) {
                             alert("You is host key cant to disconect key. You mush change host.");
                             setErrorMessage("You is host key cant to disconect key. You mush change host.");
                         }
@@ -45,7 +50,7 @@ function Item_key_manger(props) {
                     }>disconnect</button>
             </div>
             {errorMessage && <div>{errorMessage}</div>}
-            {buttonChoose === 1 && <ChangeName set={setbuttonChoose} idaccountkey ={idaccountkey }  />}
+            {buttonChoose === 1 && <ChangeName set={setbuttonChoose} idaccountkey={idaccountkey} />}
         </div>
     );
 }

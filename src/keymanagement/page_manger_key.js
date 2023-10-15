@@ -4,13 +4,12 @@ import { url_myAPI } from '../config';
 import "./main_home.css";
 import { useState,useEffect } from 'react';
 function Page_Manger_key(props) {
-    let user = "ZUBlLmNvbQ=="
+    let user = "123"
     const [s, sets] = useState({})
     useEffect(() => {
         fetch(url_myAPI + "/info?user="+user)
             .then(re => re.json())
             .then(data => {
-                console.log(data.key[0]);
                 sets(data.key);
             })
     }, [sets])

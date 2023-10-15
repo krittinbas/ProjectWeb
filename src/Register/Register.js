@@ -1,7 +1,7 @@
 import "./Register.css";
 import React, { useRef } from "react";
 import { url_myAPI } from "../config";
-import { useHistory } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import RegisterForm from "./Registerform";
 
 export default function Register() {
@@ -9,7 +9,7 @@ export default function Register() {
     const userNameInput = useRef("");
     const passInput = useRef("");
     const newPassInput = useRef("");
-    const history = useHistory();
+    const history = useNavigate();
   
     const register = (e) => {
       console.log(123);
@@ -34,7 +34,7 @@ export default function Register() {
 
               alert("register successfully");
 
-              history.push('/login'); //change this
+              history('/login'); //change this
             }
           });
       } else {
