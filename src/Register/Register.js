@@ -1,6 +1,7 @@
+import "./Register.css";
 import React, { useRef } from "react";
 import { url_myAPI } from "../config";
-import "./Register.css";
+import { useHistory } from 'react-router-dom';
 import RegisterForm from "./Registerform";
 
 export default function Register() {
@@ -8,6 +9,7 @@ export default function Register() {
     const userNameInput = useRef("");
     const passInput = useRef("");
     const newPassInput = useRef("");
+    const history = useHistory();
   
     const register = (e) => {
       console.log(123);
@@ -29,7 +31,10 @@ export default function Register() {
             if (data.error) {
               alert(data.error);
             } else {
+
               alert("register successfully");
+
+              history.push('/login'); //change this
             }
           });
       } else {
