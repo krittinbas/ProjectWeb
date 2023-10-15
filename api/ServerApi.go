@@ -94,3 +94,7 @@ func Forgetpass(c *gin.Context) {
 	}
 	c.JSON(200, gin.H{"data": "success"})
 }
+func infoAccount(c *gin.Context) {
+	email := encode.Decode(c.DefaultQuery("user", ""))
+
+}
