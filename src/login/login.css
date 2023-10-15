@@ -75,8 +75,8 @@ transform: scale(1);
     margin-left: 40px;
 }
 
-.navigation ,.btnLogin-popup:hover{
-    background: white;
+.btn:hover{
+    background: rgb(242, 158, 98);
     color:chocolate;
 }
 
@@ -183,7 +183,12 @@ transform: scale(1);
     border-radius: 6px;
     cursor: pointer;
     font-size: 1em;
-    color: black;
+    color: chocolate;
+    font-weight: 500;
+    background: transparent;
+    border: 2px solid chocolate;
+    outline: none;
+    cursor: pointer;
     font-weight: 500;
 }
 

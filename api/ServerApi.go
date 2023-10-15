@@ -1,7 +1,8 @@
 package main
 
 import (
-	mydb "API/MyDatabase"
+	mydb "API/Database"
+	"API/configs"
 	"API/encode"
 	"database/sql"
 	"fmt"
@@ -23,7 +24,7 @@ func main() {
 	r.POST("/login", loginHandler)
 	r.POST("/registor", registor)
 	r.POST("/forgetpass", Forgetpass)
-	r.Run(":1266")
+	r.Run(":" + configs.PortAPI)
 
 }
 func CORSMiddleware() gin.HandlerFunc {
@@ -92,4 +93,8 @@ func Forgetpass(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"data": "success"})
+}
+func infoAccount(c *gin.Context) {
+	email := encode.Decode(c.DefaultQuery("user", ""))
+
 }
