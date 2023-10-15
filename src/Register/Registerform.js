@@ -1,34 +1,34 @@
-export default function RegisterForm(){
+export default function RegisterForm(prop){
     return(
-        <form className="body">
+        <form className="body" onSubmit={prop.register}>
           <h2>Register</h2>
           <div className="register-container">
             <input
               className="register-box"
               placeholder="email!"
               type="text"
-              ref={emailInput}
+              ref={prop.emailInput}
             ></input>
             <input
               className="register-box"
               placeholder="username!"
               type="text"
-              ref={userNameInput}
+              ref={prop.userNameInput}
             ></input>
             <input
               className="register-box"
               placeholder="password!"
               type="text"
-              ref={passInput}
+              ref={prop.passInput}
             ></input>
             <input
               className="register-box"
               placeholder="confirm password!"
               type="text"
-              ref={newPassInput}
+              ref={prop.newPassInput}
             ></input>
     
-            <button type="submit" className="register-button" onSubmit={register}>
+            <button type="submit" className="register-button">
               register!
             </button>
           </div>

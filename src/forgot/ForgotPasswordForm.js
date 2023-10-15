@@ -13,7 +13,7 @@ const ForgotPasswordForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     if (!isValidEmail(email)) {
       alert('กรุณาใส่อีเมลล์ให้ถูกต้อง');
       return;
@@ -28,32 +28,37 @@ const ForgotPasswordForm = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
+    <form className="form" onSubmit={handleSubmit}>
+      <label className="label">
         Email:
         <input
           type="email"
+          className="input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
       </label>
-      <label>
+      <label className="label">
         New password:
         <input
           type="password"
+          className="input"
           value={newPassword}
           onChange={(e) => setNewPassword(e.target.value)}
         />
       </label>
-      <label>
+      <label className="label">
         Confirm New password:
         <input
           type="password"
+          className="input"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}
         />
       </label>
-      <button type="submit">Confirm</button>
+      <button type="submit" className="button">
+        Confirm
+      </button>
     </form>
   );
 };

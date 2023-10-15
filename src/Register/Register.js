@@ -12,6 +12,7 @@ export default function Register() {
     const history = useHistory();
   
     const register = (e) => {
+      console.log(123);
       e.preventDefault();
       const formData = new URLSearchParams();
       formData.append("email", emailInput.current.value);
@@ -30,6 +31,9 @@ export default function Register() {
             if (data.error) {
               alert(data.error);
             } else {
+
+              alert("register successfully");
+
               history.push('/login'); //change this
             }
           });
@@ -39,6 +43,6 @@ export default function Register() {
     };
 
     return (
-        <RegisterForm />
+        <RegisterForm emailInput={emailInput} passInput={passInput} newPassInput={newPassInput} register={register}/>
     );
 }
