@@ -4,6 +4,7 @@ import (
 	"API/Configs"
 	mydb "API/Database"
 	"API/encode"
+	HostMangerkey "API/hostMangerkey"
 	mangerkey "API/mangerKey"
 	"database/sql"
 	"fmt"
@@ -18,6 +19,7 @@ func main() {
 	var err error
 	Db, err = mydb.GetDB()
 	mangerkey.MangerkeyDb = Db
+	HostMangerkey.HostMangerDb = Db
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
@@ -31,6 +33,9 @@ func main() {
 	r.POST("/connectKey", mangerkey.ConnectionKey)
 	r.POST("/namechange", mangerkey.ChangeNickName)
 	r.POST("/disconnectkey", mangerkey.Disconectkey)
+	r.GET("/whoJoinKey", HostMangerkey.ListMemberJoinkey)
+	r.POST("/tranferHost", HostMangerkey.TranferHost)
+	r.POST("/Kick", HostMangerkey.Kick)
 	r.Run(":" + Configs.PortAPI)
 
 }
@@ -152,7 +157,7 @@ func infoAccount(c *gin.Context) {
 		var countuse int
 		var nowCloserDoor int
 		var mykeystatus int
-		getRow.Scan()
+		getRow.Scan(&countuse, &nowCloserDoor, &mykeystatus)
 		keyState := map[string]interface{}{
 			"countuse":      countuse,
 			"nowCloserDoor": nowCloserDoor,
@@ -169,6 +174,7 @@ func infoAccount(c *gin.Context) {
 
 		dataListKey = append(dataListKey, rowData)
 	}
+	rows.Close()
 	if len(dataListKey) == 0 {
 		c.JSON(200, gin.H{
 			"email":      encode.Decode(email),
