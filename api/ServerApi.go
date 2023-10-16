@@ -1,8 +1,8 @@
 package main
 
 import (
+	"API/Configs"
 	mydb "API/Database"
-	"API/configs"
 	"API/encode"
 	mangerkey "API/mangerKey"
 	"database/sql"
@@ -31,7 +31,7 @@ func main() {
 	r.POST("/connectKey", mangerkey.ConnectionKey)
 	r.POST("/namechange", mangerkey.ChangeNickName)
 	r.POST("/disconnectkey", mangerkey.Disconectkey)
-	r.Run(":" + configs.PortAPI)
+	r.Run(":" + Configs.PortAPI)
 
 }
 func CORSMiddleware() gin.HandlerFunc {
@@ -93,12 +93,18 @@ func registor(c *gin.Context) {
 func Forgetpass(c *gin.Context) {
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
-	query1 := "UPDATE accounts SET password = ?	WHERE email = ?"
-	getRow := Db.QueryRow(query1, password, email)
-	if getRow.Err() != nil {
-		c.JSON(400, gin.H{"error": "not found Email"})
+	//check
+	query := "select email from accounts where email= ?"
+	getRow := Db.QueryRow(query, email)
+	var emailcheck string
+	x := getRow.Scan(&emailcheck)
+	if x != nil {
+		c.JSON(400, gin.H{"error": "no email"})
 		return
 	}
+	query1 := "UPDATE accounts SET password = ?	WHERE email = ?"
+	getRow = Db.QueryRow(query1, password, email)
+
 	c.JSON(200, gin.H{"data": "success"})
 }
 func infoAccount(c *gin.Context) {
@@ -141,12 +147,24 @@ func infoAccount(c *gin.Context) {
 			}
 			dataListKeyHost = append(dataListKeyHost, keyhost)
 		}
+		queryState := "select countuse,nowCloserDoor,mykeystatus from mystate where key_idkey = ?"
+		getRow := Db.QueryRow(queryState, id)
+		var countuse int
+		var nowCloserDoor int
+		var mykeystatus int
+		getRow.Scan()
+		keyState := map[string]interface{}{
+			"countuse":      countuse,
+			"nowCloserDoor": nowCloserDoor,
+			"mykeystatus":   mykeystatus,
+		}
 		rowData := map[string]interface{}{
 			"id":       id,
 			"nickname": nickname.String,
 			"codeKey":  prekey,
 			"shareKey": shareKey.String,
 			"isHost":   thishostkey,
+			"statekey": keyState,
 		}
 
 		dataListKey = append(dataListKey, rowData)

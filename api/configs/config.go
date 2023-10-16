@@ -1,6 +1,6 @@
-package configs
+package Configs
 
-var DatabaseName = "mydb"
+var DatabaseName = "korn2"
 var Usernamedatabase = "root"
 var Passworddatabase = "Yongkeat12+"
 var IPdatabase = "localhost"

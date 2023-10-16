@@ -1,7 +1,7 @@
 package Database
 
 import (
-	"API/configs"
+	"API/Configs"
 	"database/sql"
 	"fmt"
 
@@ -9,7 +9,7 @@ import (
 )
 
 func GetDB() (*sql.DB, error) {
-	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", configs.Usernamedatabase, configs.Passworddatabase, configs.IPdatabase, configs.Portdatabase, configs.DatabaseName)
+	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", Configs.Usernamedatabase, Configs.Passworddatabase, Configs.IPdatabase, Configs.Portdatabase, Configs.DatabaseName)
 
 	db, err := sql.Open("mysql", dsn)
 	if err != nil {
