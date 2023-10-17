@@ -11,7 +11,7 @@ var HostMangerDb *sql.DB
 
 func ListMemberJoinkey(c *gin.Context) {
 	codeKey := c.DefaultQuery("codeKey", "")
-	query := "select A.email,AK.id from accounts_has_key AK,accounts A,mykey MK where key_idkey = MK.idkey and Mk.prekey= ? and A.id = AK.accounts_id"
+	query := "select A.email,AK.id from accounts_has_key AK,accounts A,mykey MK where AK.mykey_codeKey = MK.codeKey and Mk.codeKey= ? and A.id = AK.accounts_id and MK.idhostkey != A.id;"
 	row, err := HostMangerDb.Query(query, codeKey)
 	if err != nil {
 		c.JSON(400, gin.H{"error": "This key no member join!"})
@@ -38,7 +38,7 @@ func ListMemberJoinkey(c *gin.Context) {
 func TranferHost(c *gin.Context) {
 	email := encode.Encode(c.PostForm("email"))
 	codeKey := c.PostForm("codeKey")
-	query := "UPDATE mykey set idhostkey= (select id from accounts where email = ?) where prekey = ?"
+	query := "UPDATE mykey set idhostkey= (select id from accounts where email = ?) where codeKey = ?"
 	row, err := HostMangerDb.Query(query, email, codeKey)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})

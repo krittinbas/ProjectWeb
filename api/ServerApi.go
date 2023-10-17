@@ -71,7 +71,7 @@ func loginHandler(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"user":  emails,
 		"id":    id,
-		"email": email,
+		"email": encode.Decode(email),
 	})
 }
 
@@ -114,7 +114,7 @@ func Forgetpass(c *gin.Context) {
 }
 func infoAccount(c *gin.Context) {
 	email := c.DefaultQuery("user", "")
-	query := "select ak.id,ak.nickname,K.preKey,A.email as 'host',(select shareKey from mykey where idhostkey = B.id and k.idkey=idkey)as 'sharekey' from mykey K ,accounts_has_key ak,accounts A,accounts B where ak.accounts_id=b.id and K.idkey = key_idkey and A.id = K.idhostkey and B.email = ?"
+	query := "select ak.id,ak.nickname,K.codeKey,A.email as 'host',(select shareKey from mykey where idhostkey = B.id and k.codekey=codekey)as 'sharekey' from mykey K ,accounts_has_key ak,accounts A,accounts B where ak.accounts_id=b.id and K.codekey = ak.mykey_codekey and A.id = K.idhostkey and B.email = ?"
 	rows, err := Db.Query(query, email)
 	if err != nil {
 		c.JSON(406, gin.H{
@@ -129,31 +129,31 @@ func infoAccount(c *gin.Context) {
 	dataListKeyHost := make([]map[string]interface{}, 0)
 	hostkey := false
 	for rows.Next() {
-		var prekey string
+		var codeKey string
 		var id string
 		var hostemail string
 		var nickname sql.NullString // Use sql.NullString to handle NULL strings
 		var shareKey sql.NullString
-		err := rows.Scan(&id, &nickname, &prekey, &hostemail, &shareKey)
+		err := rows.Scan(&id, &nickname, &codeKey, &hostemail, &shareKey)
 		if err != nil {
 			c.JSON(500, gin.H{"error": "Internal server error"})
 			return
 		}
 		thishostkey := true
 		if email != hostemail {
-			prekey = encode.Decode(hostemail)
+			codeKey = encode.Decode(hostemail)
 			thishostkey = false
 		} else {
 			hostkey = true
 			keyhost := map[string]interface{}{
-				"codeKey":  prekey,
+				"codeKey":  codeKey,
 				"id":       id,
 				"shareKey": shareKey.String,
 			}
 			dataListKeyHost = append(dataListKeyHost, keyhost)
 		}
-		queryState := "select countuse,nowCloserDoor,mykeystatus from mystate where key_idkey = ?"
-		getRow := Db.QueryRow(queryState, id)
+		queryState := "select countuse,nowCloserDoor,keystatus from keystate where mykey_codekey = ?"
+		getRow := Db.QueryRow(queryState, codeKey)
 		var countuse int
 		var nowCloserDoor int
 		var mykeystatus int
@@ -166,7 +166,7 @@ func infoAccount(c *gin.Context) {
 		rowData := map[string]interface{}{
 			"id":       id,
 			"nickname": nickname.String,
-			"codeKey":  prekey,
+			"codeKey":  codeKey,
 			"shareKey": shareKey.String,
 			"isHost":   thishostkey,
 			"statekey": keyState,
