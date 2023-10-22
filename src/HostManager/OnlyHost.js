@@ -5,6 +5,26 @@ import KeyGenerate from './KeyGenerate';
 
 export default function OnlyHost({ nickNameArray }) {
     let arrNick = ["ninr0", "ppp"];
+    const [key, setKey] = useState({});
+
+    useEffect(() => {
+        const intervalId = setInterval(() => {
+            fetch(url_myAPI + "info?user=cGV0ZXJAcGV0ZXIuY29t")
+                .then((response) => response.json())
+                .then((data) => {
+                    setKey(data.key)
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                })
+                .finally(() => {
+                });
+        }, 1000);
+
+        // ทำความสะอาด interval เมื่อคอมโพเนนต์ถูกถอด
+        return () => clearInterval(intervalId);
+    }, [setKey, key]);
+
     return (
         <div className='onlyhost-body'>
             <header className='onlyhost-header'>
@@ -15,6 +35,10 @@ export default function OnlyHost({ nickNameArray }) {
                 {arrNick.map((item) => (
                     <SharedMember_Item nickname={item} />
                 ))}
+
+                {Object.keys(key).map((keyId, index) => (
+                    <SharedMember_Item nickname={key[keyId].nickname} />
+                ))}
             </Card>
 
             <div className='new-expense'>
@@ -22,13 +46,5 @@ export default function OnlyHost({ nickNameArray }) {
             </div>
 
         </div>
-
     );
-    /*
-            <div className='onlyhost-body'>
-            <header>
-                <h1 className='onlyhost-h1'>Host Manager</h1>
-            </header>
-            <SharedMember memberName="Supachok"/>
-    */
 }
