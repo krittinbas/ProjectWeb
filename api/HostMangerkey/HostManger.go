@@ -1,7 +1,8 @@
-package HostMangerkey
+package hostMangerkey
 
 import (
 	"API/encode"
+	"API/historykey"
 	"database/sql"
 
 	"github.com/gin-gonic/gin"
@@ -46,11 +47,18 @@ func TranferHost(c *gin.Context) {
 	}
 	row.Close()
 	c.JSON(200, gin.H{"data": "susees"})
+	historykey.ReportSend(codeKey, "Host tranfer to "+encode.Decode(email))
 }
 
 func Kick(c *gin.Context) {
 	idaccountskey := c.PostForm("idaccountskey")
-	query := "DELETE FROM accounts_has_key WHERE (id = ?)"
+	query := "select mykey_codekey , (select email from accounts where id = accounts_id) from accounts_has_key where id = ?"
+	rows := HostMangerDb.QueryRow(query, idaccountskey)
+	var email string
+	var codeKey string
+	rows.Scan(&codeKey, &email)
+	historykey.ReportSend(codeKey, "host was kick "+encode.Decode(email))
+	query = "DELETE FROM accounts_has_key WHERE (id = ?)"
 	row, err := HostMangerDb.Query(query, idaccountskey)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
@@ -58,4 +66,5 @@ func Kick(c *gin.Context) {
 	}
 	row.Close()
 	c.JSON(200, gin.H{"data": "susees"})
+
 }

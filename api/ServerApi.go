@@ -4,6 +4,7 @@ import (
 	"API/Configs"
 	mydb "API/Database"
 	"API/encode"
+	"API/historykey"
 	HostMangerkey "API/hostMangerkey"
 	mangerkey "API/mangerKey"
 	"database/sql"
@@ -36,6 +37,7 @@ func main() {
 	r.GET("/whoJoinKey", HostMangerkey.ListMemberJoinkey)
 	r.POST("/tranferHost", HostMangerkey.TranferHost)
 	r.POST("/Kick", HostMangerkey.Kick)
+	r.GET("/history", historykey.GetHistory)
 	r.Run(":" + Configs.PortAPI)
 
 }
