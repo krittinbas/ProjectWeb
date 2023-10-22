@@ -1,8 +1,8 @@
 package main
 
 import (
-	"API/Configs"
 	mydb "API/Database"
+	"API/configs"
 	"API/encode"
 	"API/historykey"
 	HostMangerkey "API/hostMangerkey"
@@ -38,7 +38,7 @@ func main() {
 	r.POST("/tranferHost", HostMangerkey.TranferHost)
 	r.POST("/Kick", HostMangerkey.Kick)
 	r.GET("/history", historykey.GetHistory)
-	r.Run(":" + Configs.PortAPI)
+	r.Run(":" + configs.PortAPI)
 
 }
 func CORSMiddleware() gin.HandlerFunc {
