@@ -3,15 +3,15 @@ import { useRef } from "react";
 import { url_myAPI } from "../config";
 import React, { useState } from 'react';
 import Cookies from 'js-cookie';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
 
 
 function Login() {
-
+    
     const email = useRef("")
     const check = useRef(null)
     const pass = useRef("")
-
+    const nav = useNavigate()
     const [rememberMe, setRememberMe] = useState(false);
 
     let email1
@@ -34,12 +34,14 @@ function Login() {
             if (data.error) {
                 alert(data.error);
             }else{
-                email1=data.email
+                email1 = data.email
                 user = data.user
                 id = data.id
+                nav("/main", { state: { data: { email: email1, user: user } } })
+
                 if (rememberMe) {
-                    Cookies.set('remembered-username', user, { expires: 7 });
-                    Cookies.set('remembered-password', id, { expires: 7 });
+                    Cookies.set('remembered-username', email.current.value, { expires: 7 });
+                    Cookies.set('remembered-password', pass.current.value, { expires: 7 });
                 }
         
             }
