@@ -1,18 +1,12 @@
-import '/buttonWebMenu.css'
+import './buttonWebMenu.css'
 import { useNavigate, useLocation } from "react-router-dom";
 
 export default function ButtonWebMenu(prop) {
-    const location = useLocation();
-    const history = useNavigate();
-
-    const queryParams = new URLSearchParams(location.search);
-    const mValue = queryParams.get("m");
-    const pageValue = queryParams.get("page");
-    let clickMe = prop.setmyID;
-    let selection = prop.select;
-
+    let myid = prop.setmyID
+    let page = prop.page
+    let setpage = prop.setPage
     return (
-        <div className={clickMe==selection ? `button-web-menu-container-a`: "button-web-menu-container-q"} onClick={()=>{history(location.pathname+"?m="+mValue+"&&"+"page="+clickMe)}}>
+        <div className={myid==page ? `button-web-menu-container-a`: "button-web-menu-container-q"} onClick={()=>{setpage(myid)}}>
             <a>{prop.name}</a>
         </div>
     );

@@ -12,7 +12,7 @@ function ChangeName(props) {
         formData.append('idaccountkey', props.idaccountkey);
         formData.append('name', nameChange);
         if (nameChange !== "") {
-            fetch(url_myAPI + `/namechange`,{
+            fetch(url_myAPI + `namechange`,{
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded'

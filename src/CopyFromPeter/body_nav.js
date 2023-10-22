@@ -2,31 +2,21 @@ import './body_nav.css';
 import { url_myAPI } from "../config.js";
 import { useEffect, useState } from "react";
 import Page_Manger_key from '../keymanagement/page_manger_key';
+import OnlyHost from '../HostManager/OnlyHost';
+import DoorControl from '../firstpage/DoorControl';
+import Page_STATE from '../history/history';
 
-export default function bodyNav(prop) {
-    let menuClick = prop.menuClick;
-    let menuPageset = prop.pageset;
-
-    const [key, setkey] = useState({})
-
-    useEffect(() => {
-        fetch(url_myAPI + `/stateKey?id=${prop.id}`)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status) {
-                    setkey(data.data)
-                }
-            })
-    }, [setkey, prop.id])
-
+export default function BodyNav(prop) {
     return (
-        <div className={`body_webMain ${menuClick ? prop.types : ""}`}>
-            {prop.id != 0 &&
+        <div className={`body_webMain`}>
+
                 <div className="body_webMain-n">
-                    {prop.page == 1 && <Page_Manger_key id={prop.id} datakey={key} name={prop.name} />}
+                    {prop.page == 0 && <DoorControl/>}
+                    {prop.page == 1 && <Page_Manger_key info={prop.info}/>}
+                    {prop.page == 2 && <OnlyHost/>}
+                    {prop.page == 3 && <Page_STATE/>}
                 </div>
-            }
-            {prop.id == 0 && <div style={{ color: "red" }}>404 no response</div>}
+         
         </div>
     );
 }

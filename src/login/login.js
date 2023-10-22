@@ -37,7 +37,7 @@ function Login() {
                 email1 = data.email
                 user = data.user
                 id = data.id
-                nav("/main", { state: { data: { email: email1, user: user } } })
+                nav("/app", { state: { data: { email: email1, user: user,id:id } } })
 
                 if (rememberMe) {
                     Cookies.set('remembered-username', email.current.value, { expires: 7 });
