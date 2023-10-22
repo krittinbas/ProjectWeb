@@ -1,74 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import './DoorControl.css';
-
+import { url_myAPI } from '../config';
+import PllageK from './pageK';
 const DoorControl = () => {
-  const [isDoorOpen, setIsDoorOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [key, setKey] = useState({});
   const [currentTime, setCurrentTime] = useState(new Date());
 
   useEffect(() => {
     // อัพเดตเวลาทุกๆ วินาที
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
+      fetch(url_myAPI + "info?user=cGV0ZXJAcGV0ZXIuY29t")
+        .then((response) => response.json())
+        .then((data) => {
+          console.log(data.key)
+          setKey(data.key)
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+        })
+        .finally(() => {
+        });
     }, 1000);
 
     // ทำความสะอาด interval เมื่อคอมโพเนนต์ถูกถอด
     return () => clearInterval(intervalId);
-  }, []);
-  
-  const toggleDoor = () => {
-    if (!isLoading) {
-      setIsLoading(true);
-      // Simulate API call to toggle the door status
-      simulateApiCall(!isDoorOpen);
-    }
-  };
-
-  const simulateApiCall = (newState) => {
-    // Simulate API call (replace this with actual API call)
-    // If newState is not provided, assume it's fetching the current state
-    const endpoint = newState ? 'open' : 'close'; // Adjust endpoint accordingly
-    fetch(`your-api-endpoint/${endpoint}`, {
-      method: 'POST', // or 'PUT' or 'PATCH' depending on your API
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ isOpen: newState }),
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setIsDoorOpen(data.isOpen);
-      })
-      .catch((error) => {
-        console.error('Error:', error);
-      })
-      .finally(() => {
-        setIsLoading(false);
-      });
-  };
-  
-
+  }, [setKey,key]);
   return (
-    
-    <div className="door-control-container">
-    <div className="clock-container">
-        <p className="digital-clock">
-          {currentTime.toLocaleTimeString('en-US', {
-            hour12: false,
-            hour: 'numeric',
-            minute: 'numeric',
-            second: 'numeric',
-          })}
-        </p>
-      </div>
-      <h1 className="door-control-title">ระบบควบคุมประตู</h1>
-      <button
-        className={`door-control-button ${isDoorOpen ? 'open' : 'close'}`}
-        onClick={toggleDoor}
-      >
-        {isLoading ? 'กำลังประมวลผล...' : isDoorOpen ? 'เปิด' : 'ปิด'}
-      </button>
-      <p className="door-status">สถานะ: {isDoorOpen ? 'เปิด' : 'ปิด'}</p>
+    <div className='appDas DOOR-body'>
+      <p className="digital-clock">
+        {currentTime.toLocaleTimeString('en-US', {
+          hour12: false,
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+        })}
+      </p>
+      {Object.keys(key).map((keyId, index) => (
+        <PllageK codekey={key[keyId].codeKey} nickname = {key[keyId].nickname} keyState = {key[keyId].statekey}/>
+      ))}
+
     </div>
   );
 };
