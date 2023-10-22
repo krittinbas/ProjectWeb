@@ -1,0 +1,75 @@
+/* DoorControl.css */
+
+body {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-image: url('./wallpaper/bgtest.jpg'); /* เปลี่ยนเป็น URL ที่ถูกต้อง */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  
+  .door-control-container {
+    font-family: 'Arial', sans-serif;
+    text-align: center;
+    background-color: #f7f7f7;
+    padding: 60px;
+    border-radius: 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 1000px; /* Adjust the max-width as needed */
+    width: 80%; /* Adjust the width as needed */
+  }
+  
+  .door-control-title {
+    color: #333;
+    font-size: 36px;
+  }
+  
+  .door-control-button {
+    padding: 30px 60px;
+    font-size: 32px;
+    cursor: pointer;
+    background-color: #4caf50;
+    color: #fff;
+    border: none;
+    border-radius: 15px;
+    margin-top: 40px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .door-control-button:hover {
+    background-color: #45a049;
+  }
+  
+  .door-status {
+    margin-top: 40px;
+    font-size: 32px;
+    color: #333;
+  }
+  
+  /* Modal for API Loading */
+  .modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+  }
+  
+  .modal p {
+    background-color: white;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  .modal.active {
+    display: flex;
+  }
+  
