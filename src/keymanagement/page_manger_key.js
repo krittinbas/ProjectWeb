@@ -7,6 +7,7 @@ import { useState, useEffect } from 'react';
 function Page_Manger_key(props) {
     let user = "cA=="
     const [s, sets] = useState({})
+    
     useEffect(() => {
         fetch(url_myAPI + "/info?user=" + user)
             .then(re => re.json())

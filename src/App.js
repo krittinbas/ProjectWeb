@@ -1,19 +1,18 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Routes, Route } from 'react-router-dom';
-import Login from './login/login';
-import Register from './Register/Register';
-import ForgotPasswordPage from './forgot/ForgotPasswordPage';
-import Page_Manger_key from './keymanagement/page_manger_key';
-import Page_STATE from './history/history';
-import SidebarDisplay from './Sidebar/SidebarDisplay';
-import DoorControl from './firstpage/DoorControl';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { url_myAPI } from './config.js';
+import Login from './login/login.js';
 
 
 function App() {
-    return (
-        <DoorControl></DoorControl>
+    return(
+        <Router>
+            <Routes>
+                <Route path="/" element={<Login />} />
+            </Routes>
+        </Router>
     );
 }
-
 
 export default App;
