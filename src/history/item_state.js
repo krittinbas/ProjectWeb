@@ -7,7 +7,7 @@ export default class ITEM_STATE extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            idkey: props.keyData["idkey"],
+            codeKey: props.keyData["codeKey"],
             nickname: props.keyData["nickname"],
             qu: 10,
             histo: []
@@ -20,12 +20,13 @@ export default class ITEM_STATE extends Component {
         }, 30000);
     }
     getState = () => {
-        const { idkey, qu } = this.state;
-        fetch(`${url_myAPI}/HistoryKeys?idkey=${idkey}&n=${qu}`)
-            .then(re => re.json())
+        const { codeKey, qu } = this.state;
+        fetch(`${url_myAPI}history?codeKey=${codeKey}&row=${qu}`)
+            .then(rell => rell.json())
             .then(data => {
                 if (data.status) {
                     this.setState({ histo: data.data })
+                    console.log(data.data )
                 }
             })
             .catch()
@@ -34,7 +35,7 @@ export default class ITEM_STATE extends Component {
         clearInterval(this.interval); // ต้องทำการล้าง Interval เมื่อ component ถูก unmount เพื่อป้องกันการทำงานของ Interval ที่ไม่จำเป็น
     }
     render() {
-        const { idkey, nickname, qu, histo } = this.state;
+        const { codeKey, nickname, qu, histo } = this.state;
         return (
             <div className="item-state-main-contrainer">
                 <div className="title">
@@ -52,9 +53,9 @@ export default class ITEM_STATE extends Component {
                     </div>
                 </div>
                 <div className="colordss">
-                    {histo.map((item, index) => (
+                    {/* {histo.map((item, index) => (
                         <LISTSTATE index={index} time={item.time} date={item.date} report={item.report} />
-                    ))}
+                    ))} */}
                 </div>
 
             </div>

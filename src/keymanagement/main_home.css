@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: url('../login/wallpaper/bgtest.jpg') ;
+    background: url('../login/wallpaper/bgtest.jpg');
     position: absolute;
     width: 100%;
     height: 100%;
@@ -10,4 +10,24 @@
     justify-content: center;
     background-size: cover;
     background-position: center;
+
+    /* เพิ่ม overflow-y เพื่อให้สามารถเลื่อนดู component */
+    /* กำหนดความสูงสูงสุดของคอมโพเนนต์ที่จะแสดง */
+}
+
+.main_page-c {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: url('../login/wallpaper/bgtest.jpg');
+    width: 100%;
+    height: 100%;
+    gap: 30px;
+    z-index: 0;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    overflow-y: auto;
+    /* เพิ่ม overflow-y เพื่อให้สามารถเลื่อนดู component */
+    /* กำหนดความสูงสูงสุดของคอมโพเนนต์ที่จะแสดง */
 }

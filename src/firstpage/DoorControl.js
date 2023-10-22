@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DoorControl.css';
 import { url_myAPI } from '../config';
 import PllageK from './pageK';
-const DoorControl = () => {
+const DoorControl = (props) => {
   const [key, setKey] = useState({});
   const [currentTime, setCurrentTime] = useState(new Date());
 
@@ -10,7 +10,7 @@ const DoorControl = () => {
     // อัพเดตเวลาทุกๆ วินาที
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
-      fetch(url_myAPI + "info?user=cGV0ZXJAcGV0ZXIuY29t")
+      fetch(url_myAPI + "info?user="+props.info.user)
         .then((response) => response.json())
         .then((data) => {
           console.log(data.key)
@@ -36,9 +36,12 @@ const DoorControl = () => {
           second: 'numeric',
         })}
       </p>
-      {Object.keys(key).map((keyId, index) => (
+      <div className='asd'>
+        {Object.keys(key).map((keyId, index) => (
         <PllageK codekey={key[keyId].codeKey} nickname = {key[keyId].nickname} keyState = {key[keyId].statekey}/>
       ))}
+      </div>
+      
 
     </div>
   );

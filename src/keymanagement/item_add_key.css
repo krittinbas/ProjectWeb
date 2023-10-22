@@ -48,7 +48,8 @@
 
 .item-add-key-contrainer button:hover {
     background: rgb(242, 158, 98);
-    color: chocolate;;
+    color: chocolate;
+    ;
 }
 
 .item-add-key-contrainer button:active {

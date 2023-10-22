@@ -10,7 +10,7 @@ function Item_add_key(props) {
         const formData = new URLSearchParams();
         formData.append('key', keyConect);
         formData.append('user', props.user);
-        fetch(`${url_myAPI}/connectKey`, {
+        fetch(`${url_myAPI}connectKey`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

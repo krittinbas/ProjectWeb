@@ -19,7 +19,7 @@ export default function Register() {
 
       if (passInput.current.value === newPassInput.current.value) {
         formData.append("password", passInput.current.value);
-        fetch(`${url_myAPI}/register`, {
+        fetch(`${url_myAPI}register`, {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"

@@ -22,7 +22,7 @@ function Login() {
         const formData = new URLSearchParams();
         formData.append('email', email.current.value);
         formData.append('password', pass.current.value);
-        fetch(`${url_myAPI}/login`, {
+        fetch(`${url_myAPI}login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'

@@ -11,10 +11,10 @@ export default function BodyNav(prop) {
         <div className={`body_webMain`}>
 
                 <div className="body_webMain-n">
-                    {prop.page == 0 && <DoorControl/>}
+                    {prop.page == 0 && <DoorControl info={prop.info}/>}
                     {prop.page == 1 && <Page_Manger_key info={prop.info}/>}
                     {prop.page == 2 && <OnlyHost/>}
-                    {prop.page == 3 && <Page_STATE/>}
+                    {prop.page == 3 && <Page_STATE info={prop.info}/>}
                 </div>
          
         </div>

@@ -5,17 +5,20 @@ import "./main_home.css";
 import { useState, useEffect } from 'react';
 
 function Page_Manger_key(props) {
-    let user = "cA=="
+    let user = props.info["user"]
     const [s, sets] = useState({})
     let data = props.info
+    console.log(user)
     console.log(data)
     return (
         <div>
-            <div className="main_page">
+            <div className="main_page-c">
                 <Item_add_key user={user} />
-                {Object.keys(data.HostKey).map((keyId, index) => (
-                    <Item_key_manger key={index} keyData={data.key[keyId]} />
-                ))}
+                {props.info.keyconnect !== false && (
+                    Object.keys(data.HostKey).map((keyId, index) => (
+                        <Item_key_manger key={index} keyData={data.key[keyId]} />
+                    ))
+                )}
             </div>
         </div>
     );
