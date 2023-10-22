@@ -38,6 +38,8 @@ func main() {
 	r.POST("/tranferHost", HostMangerkey.TranferHost)
 	r.POST("/Kick", HostMangerkey.Kick)
 	r.GET("/history", historykey.GetHistory)
+
+	r.GET("/openclose", openclose)
 	r.Run(":" + configs.PortAPI)
 
 }
@@ -192,4 +194,20 @@ func infoAccount(c *gin.Context) {
 		"isHostKey":  hostkey,
 		"HostKey":    dataListKeyHost,
 	})
+}
+func openclose(c *gin.Context) {
+	codekey := c.DefaultQuery("codeKey", "")
+	state := c.DefaultQuery("state", "")
+	query := "UPDATE mystate SET keystatus = ? WHERE (mykey_codekey =?)"
+	row := Db.QueryRow(query, state, codekey)
+	if row.Err() != nil {
+		c.JSON(500, gin.H{"error": row.Err().Error()})
+		return
+	}
+	if state == "1" {
+		c.JSON(200, "opend")
+		return
+	}
+	c.JSON(200, "close")
+
 }
