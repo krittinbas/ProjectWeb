@@ -1,18 +1,27 @@
 import "./login.css";
 import { useRef } from "react";
 import { url_myAPI } from "../config";
+import React, { useState } from 'react';
+import Cookies from 'js-cookie';
+import { Link, NavLink } from 'react-router-dom';
+
+
 function Login() {
+
     const email = useRef("")
     const check = useRef(null)
     const pass = useRef("")
+
+    const [rememberMe, setRememberMe] = useState(false);
+
     let email1
     let user
     let id
     const login = (e) => {
         e.preventDefault();
         const formData = new URLSearchParams();
-        formData.append('email', email);
-        formData.append('password', pass);
+        formData.append('email', email.current.value);
+        formData.append('password', pass.current.value);
         fetch(`${url_myAPI}/login`, {
             method: 'POST',
             headers: {
@@ -28,46 +37,51 @@ function Login() {
                 email1=data.email
                 user = data.user
                 id = data.id
+                if (rememberMe) {
+                    Cookies.set('remembered-username', user, { expires: 7 });
+                    Cookies.set('remembered-password', id, { expires: 7 });
+                }
+        
             }
         })
     }
     return (
-        <div className="body">
-            <div className="header">
-                <h1 className="logo">
-                    Korn
+        <div className="login-body">
+            <div className="login-header">
+                <h1 className="login-logo">
+                    
                 </h1>
             </div>
-            <div className="wrapepr">
-                <div className="form-box">
+            <div className="login-wrapepr">
+                <div className="login-form-box">
                     <h2>Login</h2>
                     <form onSubmit={login}>
-                        <div className="input-box">
-                            <span className="icon"></span>
+                        <div className="login-input-box">
+                            <span className="login-icon"></span>
                             <input type="email" ref={email} />
                             <label>Email</label>
                         </div>
-                        <div className="input-box">
-                            <span className="icon"></span>
+                        <div className="login-input-box">
+                            <span className="login-icon"></span>
                             <input type="password" ref={pass} />
                             <label>Password</label>
                         </div>
-                        <div className="remember-forgot">
+                        <div className="login-remember-forgot">
                             <label>
-                                <input type="checkbox" ref={check} onClick={()=>console.log(check)}/>
+                                <input type="checkbox" checked={rememberMe}
+                    onChange={() => setRememberMe(!rememberMe)}/>
                                 Remember me
-
-                            </label> <a href='#'>Forgot Password</a>
+                            </label> <Link to = '/forgot'>Forgot Password</Link>
                         </div>
-                        <button type="submit" className="btn">
+                        <button type="submit" className="login-btn">
                             Login
                         </button>
                         <div className="login-register">
                             <p>
                                 Don't have an accout?
-                                <a href="#" className="register-link">
+                                <Link to = '/register' className="login-register-link">
                                     Register
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </form>

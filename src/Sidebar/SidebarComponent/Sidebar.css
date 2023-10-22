@@ -1,0 +1,31 @@
+.sidebar-open {
+  display: flex;
+  flex-direction: row;
+  background-color: brown;
+  width: 100%;
+  height: 10%;
+  position: absolute;
+  border-radius: 9px;
+  border: 1px solid;
+  border-color: chocolate;
+  align-items: center;
+  justify-content: center;
+}
+
+.sidebar-open a{
+  text-decoration: none;
+  color: white;
+  margin-left: 20px;
+  padding: 10px;
+  border-radius: 20px;
+  border: 1px solid;
+  border-color: white;
+  background-color: chocolate;
+}
+.sidebar-open a:hover{
+  color:aquamarine;
+}
+
+.sidebar-close {
+  display: none;
+}
