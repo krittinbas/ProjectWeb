@@ -2,7 +2,7 @@ package main
 
 import (
 	mydb "API/Database"
-	configs "API/configs"
+	"API/configs"
 	"API/encode"
 	"API/historykey"
 	HostMangerkey "API/hostMangerkey"
