@@ -25,13 +25,13 @@ func ChangeNickName(c *gin.Context) {
 func ConnectionKey(c *gin.Context) {
 	keyKey := c.PostForm("key")
 	user := c.PostForm("user")
-	query1 := "select idkey,shareKey,idhostkey,(select id from accounts where email= ?) from mykey where preKey =? or shareKey =?"
+	query1 := "select codeKey,shareKey,idhostkey,(select id from accounts where email= ?) from mykey where codeKey =? or shareKey =?"
 	row := MangerkeyDb.QueryRow(query1, user, keyKey, keyKey)
 	var shareKey sql.NullString
 	var idhostkey sql.NullInt16
-	var idkey int
+	var codeKey string
 	var id int
-	err := row.Scan(&idkey, &shareKey, &idhostkey, &id)
+	err := row.Scan(&codeKey, &shareKey, &idhostkey, &id)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
@@ -41,15 +41,15 @@ func ConnectionKey(c *gin.Context) {
 	idaccountkey := encode.Encode(user + times + dataNow)
 	//host key
 	if (idhostkey == sql.NullInt16{}) {
-		query2 := "UPDATE mykey SET idhostkey = ? WHERE prekey = ?"
-		row := MangerkeyDb.QueryRow(query2, id, keyKey)
+		query2 := "UPDATE mykey SET idhostkey = ? WHERE codekey = ?"
+		row := MangerkeyDb.QueryRow(query2, id, codeKey)
 		if row.Err() != nil {
 			c.JSON(500, gin.H{"error": "Error in server. Please try again."})
 			return
 		}
 
-		query3 := "INSERT INTO accounts_has_key (id,accounts_id, key_idkey) VALUES (?,?, ?);"
-		row1 := MangerkeyDb.QueryRow(query3, idaccountkey, id, idkey)
+		query3 := "INSERT INTO accounts_has_key (id,accounts_id, mykey_codeKey) VALUES (?,?, ?);"
+		row1 := MangerkeyDb.QueryRow(query3, idaccountkey, id, codeKey)
 		if row1.Err() != nil {
 			c.JSON(500, gin.H{"error": "Error in server. Please try again."})
 			return
@@ -63,8 +63,8 @@ func ConnectionKey(c *gin.Context) {
 			c.JSON(500, gin.H{"error": "This key is connected. Please dont put it add"})
 			return
 		}
-		query3 := "INSERT INTO accounts_has_key (id,accounts_id, key_idkey) VALUES (?,?, ?);"
-		row2 := MangerkeyDb.QueryRow(query3, idaccountkey, id, idkey)
+		query3 := "INSERT INTO accounts_has_key (id,accounts_id, mykey_codeKey) VALUES (?,?, ?);"
+		row2 := MangerkeyDb.QueryRow(query3, idaccountkey, id, codeKey)
 		if row2.Err() != nil {
 			c.JSON(500, gin.H{"error": "This key is connected. Please dont put it add"})
 			return
