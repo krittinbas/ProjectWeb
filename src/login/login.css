@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap');
 
-*{
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -17,7 +17,7 @@
     display: flex;
 }
 
-.login-body{
+.login-body {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,13 +27,13 @@
     background-position: center;
 }
 
-.login-logo{
+.login-logo {
     font-size: 2em;
     color: chocolate;
     user-select: none;
 }
 
-.login-navigation{
+.login-navigation {
     position: relative;
     font-size: 1.1em;
     color: white;
@@ -42,7 +42,7 @@
     margin-left: 40px;
 }
 
-.login-navigation a::after{
+.login-navigation a::after {
     content: '';
     position: absolute;
     left: 0;
@@ -56,12 +56,12 @@
     transition: transfrom .5s;
 }
 
-.login-navigation a:hover::after{
+.login-navigation a:hover::after {
     transform-origin: left;
-transform: scale(1);
+    transform: scale(1);
 }
 
-.login-navigation .btnLogin-popup{
+.login-navigation .btnLogin-popup {
     width: 130px;
     height: 50px;
     background: transparent;
@@ -75,38 +75,38 @@ transform: scale(1);
     margin-left: 40px;
 }
 
-.login-btn:hover{
+.login-btn:hover {
     background: rgb(242, 158, 98);
-    color:chocolate;
+    color: chocolate;
 }
 
-.login-wrapepr{
+.login-wrapepr {
     position: relative;
     width: 400px;
     height: 400px;
     background: transparent;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(30px);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.login-wrapepr .login-form-box{
+.login-wrapepr .login-form-box {
     width: 100%;
     padding: 40px;
 }
 
-.login-form-box h2{
+.login-form-box h2 {
     font-size: 2em;
     color: chocolate;
     text-align: center;
     margin-top: -60px;
 }
 
-.login-input-box{
+.login-input-box {
     position: relative;
     width: 100%;
     height: 50px;
@@ -115,7 +115,7 @@ transform: scale(1);
     color: rgb(242, 158, 98);
 }
 
-.login-input-box label{
+.login-input-box label {
     position: absolute;
     top: 50%;
     left: 5px;
@@ -127,11 +127,15 @@ transform: scale(1);
     transition: .5s;
 }
 
-.login-input-box input:focus~label,.login-input-box input:invalid~label{
-    top:-5px;
+.login-input-box input:focus~label,
+.login-input-box input:valid~label {
+    top: -5px;
 }
 
-.login-input-box input{
+
+
+
+.login-input-box input {
     width: 100%;
     height: 100%;
     background: transparent;
@@ -144,7 +148,7 @@ transform: scale(1);
 
 
 
-.login-input-box .icon{
+.login-input-box .icon {
     position: absolute;
     right: 8px;
     font-size: 1.2em;
@@ -153,7 +157,7 @@ transform: scale(1);
 
 }
 
-.login-remember-forgot{
+.login-remember-forgot {
     font-size: .9em;
     color: chocolate;
     font-weight: 500;
@@ -163,21 +167,21 @@ transform: scale(1);
     justify-content: space-between;
 }
 
-.login-remember-forgot label input{
+.login-remember-forgot label input {
     accent-color: chocolate;
     margin-right: 3px;
 }
 
-.login-remember-forgot a{
+.login-remember-forgot a {
     color: chocolate;
     text-decoration: none;
 }
 
-.login-remember-forgot a:hover{
+.login-remember-forgot a:hover {
     text-decoration: underline;
 }
 
-.login-btn{
+.login-btn {
     width: 100%;
     height: 45px;
     background: chocolate;
@@ -193,49 +197,20 @@ transform: scale(1);
     font-weight: 500;
 }
 
-.login-register{
+.login-register {
     font-size: .9em;
-    color:black;
+    color: black;
     text-align: center;
     font-weight: 500;
     margin: 25px 0 10px;
 }
 
-.login-register p a{
+.login-register p a {
     color: chocolate;
     text-decoration: none;
     font-weight: 600;
 }
 
-.login-register p a:hover{
+.login-register p a:hover {
     text-decoration: underline;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

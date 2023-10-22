@@ -38,6 +38,7 @@ func main() {
 	r.POST("/tranferHost", HostMangerkey.TranferHost)
 	r.POST("/Kick", HostMangerkey.Kick)
 	r.GET("/history", historykey.GetHistory)
+
 	r.GET("/openclose", openclose)
 	r.Run(":" + configs.PortAPI)
 
