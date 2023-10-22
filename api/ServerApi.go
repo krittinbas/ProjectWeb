@@ -21,6 +21,8 @@ func main() {
 	Db, err = mydb.GetDB()
 	mangerkey.MangerkeyDb = Db
 	HostMangerkey.HostMangerDb = Db
+	historykey.HistoryDB = Db
+	historykey.ReportDB = Db
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
@@ -123,6 +125,8 @@ func infoAccount(c *gin.Context) {
 	if err != nil {
 		c.JSON(406, gin.H{
 			"email":      encode.Decode(email),
+			"user":       email,
+			"isHost":     false,
 			"keyconnect": false,
 			"key":        nil,
 			"error":      err.Error()})
@@ -157,7 +161,7 @@ func infoAccount(c *gin.Context) {
 			}
 			dataListKeyHost = append(dataListKeyHost, keyhost)
 		}
-		queryState := "select countuse,nowCloserDoor,keystatus from keystate where mykey_codekey = ?"
+		queryState := "select countuse,nowCloserDoor,keystatus from mystate where mykey_codekey = ?"
 		getRow := Db.QueryRow(queryState, codeKey)
 		var countuse int
 		var nowCloserDoor int
@@ -184,12 +188,15 @@ func infoAccount(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"email":      encode.Decode(email),
 			"keyconnect": false,
+			"user":       email,
+			"isHost":     false,
 			"key":        dataListKey,
 		})
 		return
 	}
 	c.JSON(200, gin.H{
 		"email":      encode.Decode(email),
+		"user":       email,
 		"keyconnect": true,
 		"key":        dataListKey,
 		"isHostKey":  hostkey,
