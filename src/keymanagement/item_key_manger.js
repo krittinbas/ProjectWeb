@@ -7,6 +7,7 @@ function Item_key_manger(props) {
     let shotkey = "(NO NICKNAME)\n" + codeKey.slice(0, 35) + ".....";
     let nickname = props.keyData["nickname"];
     let hostkey = props.keyData["isHost"];
+    console.log(nickname)
     let idaccountkey = props.keyData["id"];
     const [buttonChoose, setbuttonChoose] = useState(0);
     const [errorMessage, setErrorMessage] = useState("");

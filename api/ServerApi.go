@@ -67,7 +67,7 @@ func loginHandler(c *gin.Context) {
 
 	var id int
 	var emails string
-	err := row.Scan(&id, &email)
+	err := row.Scan(&id, &emails)
 	if err != nil {
 		c.JSON(401, gin.H{"error": "Invalid email or password. Please try again."})
 		return
@@ -75,7 +75,7 @@ func loginHandler(c *gin.Context) {
 	c.JSON(200, gin.H{
 		"user":  emails,
 		"id":    id,
-		"email": encode.Decode(email),
+		"email": encode.Decode(emails),
 	})
 }
 
@@ -153,6 +153,7 @@ func infoAccount(c *gin.Context) {
 				"codeKey":  codeKey,
 				"id":       id,
 				"shareKey": shareKey.String,
+				"nickname": nickname,
 			}
 			dataListKeyHost = append(dataListKeyHost, keyhost)
 		}

@@ -4,7 +4,7 @@ import SharedMember_Item from './SharedMemberItem/SharedMember_Item';
 import KeyGenerate from './KeyGenerate';
 
 export default function OnlyHost({ nickNameArray }) {
-
+    let arrNick = ["ninr0", "ppp"];
     return (
         <div className='onlyhost-body'>
             <header className='onlyhost-header'>
@@ -12,7 +12,7 @@ export default function OnlyHost({ nickNameArray }) {
             </header>
 
             <Card className="onlyhost-container">
-                {nickNameArray.map((item) => (
+                {arrNick.map((item) => (
                     <SharedMember_Item nickname={item} />
                 ))}
             </Card>

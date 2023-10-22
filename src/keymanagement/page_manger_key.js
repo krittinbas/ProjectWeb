@@ -7,22 +7,14 @@ import { useState, useEffect } from 'react';
 function Page_Manger_key(props) {
     let user = "cA=="
     const [s, sets] = useState({})
-    
-    useEffect(() => {
-        fetch(url_myAPI + "/info?user=" + user)
-            .then(re => re.json())
-            .then(data => {
-                sets(data.key);
-            })
-    }, [sets])
-
+    let data = props.info
+    console.log(data)
     return (
         <div>
             <div className="main_page">
                 <Item_add_key user={user} />
-                {Object.keys(s).map((keyId, index) => (
-
-                    <Item_key_manger key={index} keyData={s[keyId]} />
+                {Object.keys(data.HostKey).map((keyId, index) => (
+                    <Item_key_manger key={index} keyData={data.key[keyId]} />
                 ))}
             </div>
         </div>
