@@ -1,11 +1,13 @@
 .item-state-main-contrainer {
     display: flex;
     width: 80%;
+    height: 10%;
     background: #211414;
     padding: 20px;
     flex-direction: column;
     border-radius: 35px;
     gap: 20px;
+    margin-top: 15px;
 }
 
 .item-state-main-contrainer .title {
@@ -71,4 +73,17 @@
 .colordss {
     background: rgb(59, 51, 54);
     color: rgb(161, 211, 255);
+}
+
+.submits{
+    width: 100%;
+    height: 45px;
+    background: chocolate;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1em;
+    color: chocolate;
+    font-weight: 500;
+    background: transparent;
+    border: 2px solid chocolate;
 }

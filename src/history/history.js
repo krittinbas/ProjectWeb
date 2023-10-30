@@ -19,7 +19,7 @@ export default function Page_STATE() {
     }
     let key = infoAccount.key;
     return (
-        <div>
+        <div  >
             <SidebarDisplay />
             <div className="main_page-hi">
                 {Object.keys(key).map((keyId, index) => (

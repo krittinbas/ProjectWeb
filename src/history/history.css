@@ -1,7 +1,11 @@
 .main_page-hi{
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    background: url('../login/wallpaper/bgtest.jpg');
+    width: 100%;
+    height: 100vh;
     gap: 30px;
-    background-color: url('../login/wallpaper/bgtest.jpg');
+    z-index: 0;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
 }

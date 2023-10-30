@@ -47,7 +47,7 @@ export default class ITEM_STATE extends Component {
                     </div>
                     <div>
                         <input type="number" defaultValue={qu} min="10" max="50" onChange={(e) => { this.setState({ qu: e.target.value }) }} />
-                        <input type="submit" onClick={() => this.getState()} />
+                        <input type="submit" className="submits" onClick={() => this.getState()} />
                     </div>
                 </div>
                 <div className="colordss">
