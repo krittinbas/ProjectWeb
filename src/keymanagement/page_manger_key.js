@@ -5,7 +5,7 @@ import "./main_home.css";
 import { useState, useEffect } from 'react';
 
 function Page_Manger_key(props) {
-    let user = props.info["user"]
+    const user = localStorage.getItem("username");
     const [s, sets] = useState({})
     let data = props.info
     console.log(user)
