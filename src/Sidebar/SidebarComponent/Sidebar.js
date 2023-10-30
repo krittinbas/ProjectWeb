@@ -30,6 +30,7 @@ const Sidebar = () => {
           localStorage.clear();
           Cookies.remove("remembered-username")
           Cookies.remove("remembered-password")
+          Nev("/login")
         }
           }>
           Logout

@@ -41,6 +41,7 @@ func main() {
 	r.POST("/Kick", HostMangerkey.Kick)
 	r.GET("/history", historykey.GetHistory)
 	r.POST("/GenShareKey", mangerkey.GenKey)
+	r.POST("/GenDeleteKey", mangerkey.DeleteKey)
 
 	r.GET("/openclose", openclose)
 	r.Run(":" + configs.PortAPI)

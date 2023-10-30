@@ -3,6 +3,8 @@ package mangerkey
 import (
 	"API/encode"
 	"database/sql"
+	"math/rand"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -22,22 +24,31 @@ func ChangeNickName(c *gin.Context) {
 	c.JSON(200, gin.H{"status": 200, "data": "You change name is " + namechange})
 }
 
-func GenKey(c *gin.Context){
-	rand.Seed(time.Now().UnixNano())
-
-	// Generate a random 6-digit number
+func GenKey(c *gin.Context) {
 	min := 100000 // 6-digit number starts with 100000
 	max := 999999 // 6-digit number ends with 999999
 	randomNumber := rand.Intn(max-min+1) + min
+	strNum := strconv.Itoa(randomNumber)
 
-	codeKey := c.PostForm("codeKey");
+	codeKey := c.PostForm("codeKeypp")
 	query := "UPDATE mykey SET shareKey = ? WHERE (codeKey = ?);"
-	row := MangerkeyDb.QueryRow(query, randomNumber, codeKey);
+	row := MangerkeyDb.QueryRow(query, strNum, codeKey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
-	c.JSON(200, gin.H{"status": 200, "shareKey": randomNumber}) //we can use shareKey in react
+	c.JSON(200, gin.H{"status": 200, "shareKey": strNum}) //we can use shareKey in react
+}
+
+func DeleteKey(c *gin.Context) {
+	codeKey := c.PostForm("codeKeypp")
+	query := "UPDATE mykey SET shareKey = null WHERE (codeKey = ?);"
+	row := MangerkeyDb.QueryRow(query, codeKey)
+	if row.Err() != nil {
+		c.JSON(500, gin.H{"error": row.Err().Error()})
+		return
+	}
+	c.JSON(200, gin.H{"status": 200}) //we can use shareKey in react
 }
 
 func ConnectionKey(c *gin.Context) {
