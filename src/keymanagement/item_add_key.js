@@ -2,14 +2,15 @@ import "./item_add_key.css";
 import { useState } from "react";
 import { url_myAPI } from "../config";
 
-function Item_add_key(props) {
+function Item_add_key() {
+    const user = localStorage.getItem("username");
     const [errorMessage, setErrorMessage] = useState("");
     const [keyConect, setKeyConect] = useState("");
     const ClickConnect = (e) => {
         e.preventDefault();
         const formData = new URLSearchParams();
         formData.append('key', keyConect);
-        formData.append('user', props.user);
+        formData.append('user', user);
         fetch(`${url_myAPI}connectKey`, {
             method: 'POST',
             headers: {

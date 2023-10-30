@@ -14,9 +14,9 @@ export default function SidebarDisplay(prop) {
         <div className="content">
           <Routes>
             <Route path="/DoorControl" element={<DoorControl />}></Route>
-            <Route path="/KeyManager" element={<Page_Manger_key info={prop.info} />}></Route>
+            <Route path="/KeyManager" element={<Page_Manger_key />}></Route>
             <Route path="/KeyHost" element={<OnlyHost />}></Route>
-            <Route path="/history" element={<Page_STATE info={prop.info} />} />
+            <Route path="/history" element={<Page_STATE />} />
           </Routes>
         </div>
       </div>
