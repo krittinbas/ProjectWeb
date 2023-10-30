@@ -1,0 +1,12 @@
+.password-container {
+    position: relative;
+  }
+  
+  .password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #0073e6; /* You can use any color you prefer */
+  }

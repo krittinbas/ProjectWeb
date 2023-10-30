@@ -1,3 +1,5 @@
+import React, { useState, useEffect } from 'react';
+import { url_myAPI } from '../config.js';
 import './OnlyHost.css';
 import Card from './UI/Card';
 import SharedMember_Item from './SharedMemberItem/SharedMember_Item';
