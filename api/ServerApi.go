@@ -206,16 +206,19 @@ func infoAccount(c *gin.Context) {
 func openclose(c *gin.Context) {
 	codekey := c.DefaultQuery("codeKey", "")
 	state := c.DefaultQuery("state", "")
-	query := "UPDATE mystate SET keystatus = ? WHERE (mykey_codekey =?)"
+	who := c.DefaultQuery("who", "")
+	query := "UPDATE mystate SET keystatus = ?,countuse = countuse + 1 WHERE (mykey_codekey =?)"
 	row := Db.QueryRow(query, state, codekey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
 	if state == "1" {
+		historykey.ReportSend(codekey, fmt.Sprintf("%s open door", who))
 		c.JSON(200, "opend")
 		return
 	}
+	historykey.ReportSend(codekey, fmt.Sprintf("%s close door", who))
 	c.JSON(200, "close")
 
 }

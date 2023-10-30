@@ -76,14 +76,4 @@
 }
 
 .submits{
-    width: 100%;
-    height: 45px;
-    background: chocolate;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 1em;
-    color: chocolate;
-    font-weight: 500;
-    background: transparent;
-    border: 2px solid chocolate;
 }

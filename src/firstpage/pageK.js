@@ -19,7 +19,7 @@ export default function PllageK(promps) {
         if (b===0){
             state = 1 
         }
-        fetch(url_myAPI+"openclose?codeKey="+a+"&state="+state)
+        fetch(url_myAPI+"openclose?codeKey="+a+"&state="+state+"&who="+localStorage.getItem("email"))
         .then(re => re.json())
         .then(data=>{
             setLoading(false);

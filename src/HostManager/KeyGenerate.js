@@ -8,7 +8,7 @@ export default function KeyGenerate() {
     const addKey = async () => {
         try {
             const codekey = "555"; // Replace with the key you want to insert.
-            const response = await fetch(`${url_myAPI}api/addKeyAdder`, { // Use the imported URL
+            const response = await fetch(`${url_myAPI}apx/appKeyAdder/app.go`, { // Use the imported URL
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/x-www-form-urlencoded',

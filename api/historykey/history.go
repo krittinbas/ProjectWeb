@@ -9,14 +9,14 @@ import (
 var HistoryDB *sql.DB
 
 func GetHistory(c *gin.Context) {
-	codekey := c.DefaultQuery("", "")
+	codekey := c.DefaultQuery("codeKey", "")
 
 	rowHistory := c.DefaultQuery("row", "")
-	query := "select * from history where mykey_codekey = ? order by idhistory desc limit ?"
+	query := "select date , time ,report from history where mykey_codekey = ? order by idhistory desc limit ?"
 	row, err := HistoryDB.Query(query, codekey, rowHistory)
 	if err != nil {
 		// fmt.Println(err.Error())
-		c.JSON(500, gin.H{"error": err.Error()})
+		c.JSON(500, gin.H{"error": "Internal server error"})
 		return
 	}
 	dataHistory := make([]map[string]interface{}, 0)

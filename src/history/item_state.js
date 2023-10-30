@@ -24,9 +24,10 @@ export default class ITEM_STATE extends Component {
         fetch(`${url_myAPI}history?codeKey=${codeKey}&row=${qu}`)
             .then(rell => rell.json())
             .then(data => {
-                if (data.status) {
-                    this.setState({ histo: data.data })
-                }
+
+                this.setState({ histo: data.data })
+                console.log(data.data)
+
             })
             .catch()
     }
@@ -51,10 +52,11 @@ export default class ITEM_STATE extends Component {
                     </div>
                 </div>
                 <div className="colordss">
-                    {/* {histo.map((item, index) => (
-                        <LISTSTATE index={index} time={item.time} date={item.date} report={item.report} />
-                    ))} */}
+                    {Object.values(histo).map((item, index) => (
+                        <LISTSTATE key={index} time={item.time} date={item.date} report={item.report} />
+                    ))}
                 </div>
+
             </div>
         );
     }
