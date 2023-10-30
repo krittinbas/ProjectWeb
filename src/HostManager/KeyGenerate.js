@@ -1,24 +1,25 @@
 import './KeyGenerate.css';
 import React, { useState } from 'react';
+import { url_myAPI } from '../config';
 
 export default function KeyGenerate() {
     const [keyCode, setKeyCode] = useState('');
 
-    const generateKey = async () => {
+    const addKey = async () => {
         try {
-            // Make an API request to trigger the key generation on the backend
-            const response = await fetch('/api/appKeyAdder/generate-key', {
+            const codekey = "555"; // Replace with the key you want to insert.
+            const response = await fetch(`${url_myAPI}api/addKeyAdder`, { // Use the imported URL
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
+                    'Content-Type': 'application/x-www-form-urlencoded',
                 },
+                body: `codekey=${codekey}`,
             });
 
             if (response.ok) {
-                // The key is not returned in this example; you could modify your API to return the generated key
-                setKeyCode('555'); // You can clear the input field or update it with the generated key if returned by the API.
+                // Handle success, e.g., display a success message or update the UI.
             } else {
-                console.error('Failed to generate key and update the database.');
+                console.error('Failed to add the key manually.');
             }
         } catch (error) {
             console.error('Error:', error);
@@ -33,7 +34,7 @@ export default function KeyGenerate() {
                     <input type="text" value={keyCode} readOnly />
                 </div>
                 <div className="new-expense_actions">
-                    <button type="button" onClick={generateKey}>Generate Key!</button>
+                    <button type="button" onClick={addKey}>Generate Key!</button>
                 </div>
             </div>
         </form>
