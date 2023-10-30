@@ -76,4 +76,12 @@
 }
 
 .submits{
+    background: chocolate;
+    background: transparent;
+    border: 2px solid chocolate;
+    color: rgb(242, 158, 98);
+}
+
+.submits:hover{
+    backdrop-filter: blur(30px);
 }
