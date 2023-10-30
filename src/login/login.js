@@ -37,7 +37,10 @@ function Login() {
                 email1 = data.email
                 user = data.user
                 id = data.id
-                nav("/app", { state: { data: { email: email1, user: user,id:id } } })
+                nav("/DoorControl")
+                localStorage.setItem("username", user)
+                localStorage.setItem("id", id)
+                localStorage.setItem("email", email1)
 
                 if (rememberMe) {
                     Cookies.set('remembered-username', email.current.value, { expires: 7 });

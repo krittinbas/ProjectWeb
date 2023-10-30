@@ -6,6 +6,7 @@ import Login from './login/login.js';
 import WebBody from "./CopyFromPeter/webBody";
 import Register from './Register/Register';
 import Page_STATE from './history/history';
+import DoorControl from './firstpage/DoorControl';
 
 function App() {
     return (
@@ -14,6 +15,7 @@ function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/app" element={<WebBody />} />
+                <Route path="/DoorControl" element={<DoorControl/>}></Route>
                 <Route path="/his" element={<Page_STATE />} />
                 <Route path="/login" element={<Login />} />
             </Routes>

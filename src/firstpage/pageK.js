@@ -26,10 +26,6 @@ export default function PllageK(promps) {
     }
     return (
         <div className="door-control-container">
-
-            <div className="clock-container">
-
-            </div>
             <h1 className="door-control-title">{promps.nickname === "" ? promps.codekey : promps.nickname}</h1>
             {promps.nickname !== "" &&<h4 className="door-control-title2">{promps.codekey}</h4> }
             

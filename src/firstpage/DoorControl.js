@@ -8,9 +8,10 @@ const DoorControl = (props) => {
 
   useEffect(() => {
     // อัพเดตเวลาทุกๆ วินาที
+    const user = localStorage.getItem("username");
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
-      fetch(url_myAPI + "info?user="+props.info.user)
+      fetch(url_myAPI + "info?user="+user)
         .then((response) => response.json())
         .then((data) => {
           console.log(data.key)
