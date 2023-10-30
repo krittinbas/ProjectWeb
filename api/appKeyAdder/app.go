@@ -76,6 +76,12 @@ func addKeymanual() {
 		return
 	}
 	fmt.Println("Insreted!")
+	query = "INSERT INTO mystate (countuse, nowCloserDoor, keystatus, mykey_codeKey) VALUES ('0', '0', '0', ?)"
+	row = DB.QueryRow(query, codekey)
+	if row.Err() != nil {
+		fmt.Println("Error :", row.Err().Error())
+		return
+	}
 }
 func GenKey() {
 	times := time.Now().Format("15:04:05")
@@ -93,4 +99,10 @@ func GenKey() {
 		return
 	}
 	fmt.Println("key", ss, "inserted!!!")
+	query = "INSERT INTO mystate (countuse, nowCloserDoor, keystatus, mykey_codeKey) VALUES ('0', '0', '0', ?)"
+	row = DB.QueryRow(query, ss)
+	if row.Err() != nil {
+		fmt.Println("Error :", row.Err().Error())
+		return
+	}
 }
