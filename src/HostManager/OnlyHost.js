@@ -1,31 +1,28 @@
 import React, { useState, useEffect } from 'react';
-import { url_myAPI } from '../config.js';
 import './OnlyHost.css';
 import Card from './UI/Card';
 import SharedMember_Item from './SharedMemberItem/SharedMember_Item';
 import KeyGenerate from './KeyGenerate';
 
+// HostManger.go
 export default function OnlyHost({ nickNameArray }) {
-    let arrNick = ["ninr0", "ppp"];
-    const [key, setKey] = useState({});
+    const [members, setMembers] = useState([])
 
     useEffect(() => {
-        const intervalId = setInterval(() => {
-            fetch(url_myAPI + "info?user=cGV0ZXJAcGV0ZXIuY29t")
-                .then((response) => response.json())
-                .then((data) => {
-                    setKey(data.key)
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                })
-                .finally(() => {
-                });
-        }, 1000);
-
-        // ทำความสะอาด interval เมื่อคอมโพเนนต์ถูกถอด
-        return () => clearInterval(intervalId);
-    }, [setKey, key]);
+        // Make an HTTP request to fetch the members of the host key
+        fetch('/api/route-to-ListMemberJoinkey?codeKey=your-key', {
+            method: 'GET',
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.data) {
+                    setMembers(data.data);
+                }
+            })
+            .catch(error => {
+                console.error('Error fetching member data: ', error);
+            });
+    }, []);
 
     return (
         <div className='onlyhost-body'>
@@ -34,13 +31,14 @@ export default function OnlyHost({ nickNameArray }) {
             </header>
 
             <Card className="onlyhost-container">
-                {arrNick.map((item) => (
-                    <SharedMember_Item nickname={item} />
-                ))}
-
-                {Object.keys(key).map((keyId, index) => (
-                    <SharedMember_Item nickname={key[keyId].nickname} />
-                ))}
+                <ul>
+                    {members.map(member => (
+                        <SharedMember_Item
+                            key={member.idaccountskey}
+                            email={member.email}
+                        />
+                    ))}
+                </ul>
             </Card>
 
             <div className='new-expense'>
