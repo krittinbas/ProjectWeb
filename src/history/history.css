@@ -1,6 +1,7 @@
-.main_page{
+.main_page-hi{
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    background-color: url('../login/wallpaper/bgtest.jpg');
 }

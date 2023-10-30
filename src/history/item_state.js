@@ -10,7 +10,7 @@ export default class ITEM_STATE extends Component {
             codeKey: props.keyData["codeKey"],
             nickname: props.keyData["nickname"],
             qu: 10,
-            histo: []
+            histo: {}
         };
     }
     componentDidMount() {
@@ -26,7 +26,6 @@ export default class ITEM_STATE extends Component {
             .then(data => {
                 if (data.status) {
                     this.setState({ histo: data.data })
-                    console.log(data.data )
                 }
             })
             .catch()
@@ -44,8 +43,7 @@ export default class ITEM_STATE extends Component {
                         <div className="off">on</div>
                     </div>
                     <div className="state">
-                        จำนวนเปิดปิด : 1
-                        มีคนเข้าใกล้ : 1
+                        จำนวนเปิดปิด :  {this.props.keyData["statekey"].countuse}
                     </div>
                     <div>
                         <input type="number" defaultValue={qu} min="10" max="50" onChange={(e) => { this.setState({ qu: e.target.value }) }} />
@@ -57,7 +55,6 @@ export default class ITEM_STATE extends Component {
                         <LISTSTATE index={index} time={item.time} date={item.date} report={item.report} />
                     ))} */}
                 </div>
-
             </div>
         );
     }

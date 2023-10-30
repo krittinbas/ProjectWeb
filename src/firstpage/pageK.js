@@ -6,6 +6,7 @@ export default function PllageK(promps) {
     const [nowState,setNowSate] = useState(false);
     let b = promps.keyState["mykeystatus"]
     let a = promps.codekey 
+    console.log(b)
     const toggleDoor = () => {
         if (!isLoading) {
             setLoading(true)
@@ -28,7 +29,7 @@ export default function PllageK(promps) {
         <div className="door-control-container">
             <h1 className="door-control-title">{promps.nickname === "" ? promps.codekey : promps.nickname}</h1>
             {promps.nickname !== "" &&<h4 className="door-control-title2">{promps.codekey}</h4> }
-            
+            <p className='kon'>{promps.keyState.nowCloserDoor === 0 ? "ไม่มีคนหน้าประตู":"มีคนหน้าประตู"}</p>
             <button
                 className={`door-control-button ${b == 0 ? 'open' : 'close'}`}
                 onClick={toggleDoor}

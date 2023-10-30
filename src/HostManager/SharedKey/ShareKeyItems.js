@@ -16,10 +16,6 @@ export default function ShareKeyItems(){
             })
     }, [setInfoAccount]);
 
-    if(infoAccount.isHost){
-        
-    }
-
     return(
         <Card className="sharekey_container">
             <p></p>
