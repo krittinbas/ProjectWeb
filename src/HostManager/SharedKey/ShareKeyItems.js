@@ -18,8 +18,8 @@ export default function ShareKeyItems(){
 
     return(
         <Card className="sharekey_container">
-            <p></p>
-            <p></p>
+            <p>ggg</p>
+            <p>ggg</p>
         </Card>
     );
 }

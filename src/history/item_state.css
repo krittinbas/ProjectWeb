@@ -72,7 +72,7 @@
 
 .colordss {
     background: rgb(59, 51, 54);
-    color: rgb(161, 211, 255);
+    color: rgb(242, 158, 98)
 }
 
 .submits{
@@ -83,5 +83,6 @@
 }
 
 .submits:hover{
-    backdrop-filter: blur(30px);
+    background: rgb(242, 158, 98);
+    color: white;
 }

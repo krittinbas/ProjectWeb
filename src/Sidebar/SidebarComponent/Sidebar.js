@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link,useNavigate } from 'react-router-dom';
 import SidebarIcon from '../Icon/SidebarIcon';
 import './Sidebar.css';
-
+import Cookies from 'js-cookie';
 const Sidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const toggleSidebar = () => {
@@ -18,13 +18,21 @@ const Sidebar = () => {
           Door Control
         </p>
         <p onClick={()=>Nev("/KeyManager")}>
-         Key Manager
+        Key Manager
         </p>
         <p onClick={()=>Nev("/KeyHost")}>
           Host Manager
         </p>
         <p onClick={()=>Nev("/history")}>
           User History
+        </p>
+        <p onClick={()=>{
+          localStorage.clear();
+          Cookies.remove("remembered-username")
+          Cookies.remove("remembered-password")
+        }
+          }>
+          Logout
         </p>
       </div>
     </div>
