@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './DoorControl.css';
 import { url_myAPI } from '../config';
 import PllageK from './pageK';
-const DoorControl = (props) => {
+const DoorControl = () => {
   const [key, setKey] = useState({});
   const [currentTime, setCurrentTime] = useState(new Date());
   useEffect(() => {
@@ -24,6 +24,8 @@ const DoorControl = (props) => {
     }, 1000);
     return () => clearInterval(intervalId);
   }, [setKey, key]);
+
+  
   return (
     <div className='DOOR-body'>
       <p className="digital-clock">
