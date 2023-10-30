@@ -6,8 +6,8 @@ export default function KeyGenerate() {
 
     const generateKey = async () => {
         try {
-            // Make an API request to generate and store the key in the database
-            const response = await fetch('/api/generate-key', {
+            // Make an API request to trigger the key generation on the backend
+            const response = await fetch('/api/appKeyAdder/generate-key', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -15,8 +15,8 @@ export default function KeyGenerate() {
             });
 
             if (response.ok) {
-                const data = await response.json();
-                setKeyCode(data.generatedKey);
+                // The key is not returned in this example; you could modify your API to return the generated key
+                setKeyCode('555'); // You can clear the input field or update it with the generated key if returned by the API.
             } else {
                 console.error('Failed to generate key and update the database.');
             }
