@@ -5,25 +5,17 @@ import { url_myAPI } from '../config';
 export default function KeyGenerate() {
     const [keyCode, setKeyCode] = useState('');
 
-    const addKey = async () => {
-        try {
-
-            keyCode = "555"; // Replace with the key you want to insert.
-            const response = await fetch(`${url_myAPI}api/appKeyAdder/app.go`, { // Use the imported URL
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `codekey=${keyCode}`,
-            });
-            if (response.ok) {
-                // Handle success, e.g., display a success message or update the UI.
-            } else {
-                console.error('Failed to add the key manually.');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
+    const addKey = async (e) => {
+        const shareKey = new URLSearchParams();
+        shareKey.append('codeKey', email.current.value);
+        
+        fetch(`${url_myAPI}GenShareKey`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: formData.toString()
+        })
     }
 
     return (

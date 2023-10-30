@@ -106,29 +106,3 @@ func GenKey() {
 		return
 	}
 }
-
-func addKey(codekey string) {
-	gettingallkey()
-	fmt.Println("!!!insert not repeat in table!!!")
-	if codekey == "" {
-		fmt.Println("dont insert '' ")
-		return
-	}
-
-	// Insert the codekey into the mykey table
-	query := "INSERT INTO mykey (codeKey) VALUES (?)"
-	row := DB.QueryRow(query, codekey)
-	if row.Err() != nil {
-		fmt.Println("Error :", row.Err().Error())
-		return
-	}
-	fmt.Println("Inserted!")
-
-	// Insert associated data into the mystate table
-	query = "INSERT INTO mystate (countuse, nowCloserDoor, keystatus, mykey_codeKey) VALUES ('0', '0', '0', ?)"
-	row = DB.QueryRow(query, codekey)
-	if row.Err() != nil {
-		fmt.Println("Error :", row.Err().Error())
-		return
-	}
-}
