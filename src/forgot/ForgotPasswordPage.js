@@ -8,7 +8,6 @@ const ForgotPasswordPage = () => {
   const linkto = useNavigate()
   const handleForgotPassword = ({ email, newPassword }) => {
     const formData = new URLSearchParams();
-   
     formData.append('email', email);
     formData.append('password', newPassword);
     fetch(url_myAPI + "/forgetpass", {
@@ -33,7 +32,7 @@ const ForgotPasswordPage = () => {
   };
 
   return (
-    <div>
+    <div className='body'>
       <h1>Forget Password</h1>
       <ForgotPasswordForm onSubmit={handleForgotPassword} />
     </div>

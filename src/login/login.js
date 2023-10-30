@@ -41,12 +41,10 @@ function Login() {
                 localStorage.setItem("username", user)
                 localStorage.setItem("id", id)
                 localStorage.setItem("email", email1)
-
                 if (rememberMe) {
                     Cookies.set('remembered-username', email.current.value, { expires: 7 });
                     Cookies.set('remembered-password', pass.current.value, { expires: 7 });
                 }
-        
             }
         })
     }
