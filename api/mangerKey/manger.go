@@ -22,6 +22,24 @@ func ChangeNickName(c *gin.Context) {
 	c.JSON(200, gin.H{"status": 200, "data": "You change name is " + namechange})
 }
 
+func GenKey(c *gin.Context){
+	rand.Seed(time.Now().UnixNano())
+
+	// Generate a random 6-digit number
+	min := 100000 // 6-digit number starts with 100000
+	max := 999999 // 6-digit number ends with 999999
+	randomNumber := rand.Intn(max-min+1) + min
+
+	codeKey := c.PostForm("codeKey");
+	query := "UPDATE mykey SET shareKey = ? WHERE (codeKey = ?);"
+	row := MangerkeyDb.QueryRow(query, randomNumber, codeKey);
+	if row.Err() != nil {
+		c.JSON(500, gin.H{"error": row.Err().Error()})
+		return
+	}
+	c.JSON(200, gin.H{"status": 200, "shareKey": randomNumber}) //we can use shareKey in react
+}
+
 func ConnectionKey(c *gin.Context) {
 	keyKey := c.PostForm("key")
 	user := c.PostForm("user")
