@@ -9,16 +9,21 @@ const Sidebar = () => {
     setIsOpen(!isOpen);
   };
 
-
   return (
     <div>
       <SidebarIcon isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div className={isOpen ? 'sidebar-open' : 'sidebar-close'}>
         <p>
-          <Link to="/Key_Status">KeyStatus</Link>
+          <Link to="/DoorControl">Door Control</Link>
         </p>
         <p>
-          <Link to="/Key_Management">KeyManagement</Link>
+          <Link to="/KeyManager">Key Manager</Link>
+        </p>
+        <p>
+          <Link to="/KeyHost">Host Manager</Link>
+        </p>
+        <p>
+          <Link to="/history">User History</Link>
         </p>
       </div>
     </div>

@@ -1,7 +1,5 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import { useState, useEffect } from 'react';
-import { url_myAPI } from './config.js';
 import Login from './login/login.js';
 import Register from './Register/Register';
 import ForgotPasswordPage from './forgot/ForgotPasswordPage';
@@ -19,6 +17,8 @@ function App() {
                 <Route path="/" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/forgetpass" element={<ForgotPasswordPage />} />
+
+                <Route path="/dashboard/*" element={<SidebarDisplay />}/>
 
                 <Route path="/DoorControl" element={<DoorControl />} />
                 <Route path="/KeyManager" element={<Page_Manger_key />} />
