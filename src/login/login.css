@@ -22,7 +22,7 @@
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background: url('./wallpaper/bgtest.jpg') no-repeat;
+    background: url('./wallpaper/bgtest.jpg');
     background-size: cover;
     background-position: center;
 }

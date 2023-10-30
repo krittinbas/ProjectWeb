@@ -10,6 +10,10 @@
   background: url('../login/wallpaper/bgtest.jpg');
   background-size: cover;
   background-position: center;
+  background-repeat: repeat-y;
+  position: fixed;
+  overflow: scroll;
+  z-index: 0;
 }
 
 
