@@ -4,27 +4,10 @@ import Card from './UI/Card';
 import SharedMember_Item from './SharedMemberItem/SharedMember_Item';
 import KeyGenerate from './KeyGenerate';
 import SidebarDisplay from '../Sidebar/SidebarDisplay';
+import ShareKeyItems from './SharedKey/ShareKeyItems';
 
 // HostManger.go
-export default function OnlyHost({ nickNameArray }) {
-    const [members, setMembers] = useState([])
-
-    useEffect(() => {
-        // Make an HTTP request to fetch the members of the host key
-        fetch('/api/route-to-ListMemberJoinkey?codeKey=your-key', {
-            method: 'GET',
-        })
-            .then(response => response.json())
-            .then(data => {
-                if (data.data) {
-                    setMembers(data.data);
-                }
-            })
-            .catch(error => {
-                console.error('Error fetching member data: ', error);
-            });
-    }, []);
-
+export default function OnlyHost() {
     return (
         <div>
             <SidebarDisplay />
@@ -34,14 +17,19 @@ export default function OnlyHost({ nickNameArray }) {
                 </header>
 
                 <Card className="onlyhost-container">
-                    <ul>
-                        {members.map(member => (
-                            <SharedMember_Item
-                                key={member.idaccountskey}
-                                email={member.email}
-                            />
-                        ))}
-                    </ul>
+                    <SharedMember_Item />
+                    <SharedMember_Item />
+                    <SharedMember_Item />
+                    <SharedMember_Item />
+                    <SharedMember_Item />
+                </Card>
+
+                <header className='onlyhost-header'>
+                    <h1>Key Manager</h1>
+                </header>
+
+                <Card className="onlyhost-key">
+                    <ShareKeyItems />
                 </Card>
 
                 <div className='new-expense'>
