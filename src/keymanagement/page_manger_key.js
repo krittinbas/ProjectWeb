@@ -3,6 +3,7 @@ import Item_key_manger from "./item_key_manger";
 import { url_myAPI } from '../config';
 import "./main_home.css";
 import { useState, useEffect } from 'react';
+import SidebarDisplay from '../Sidebar/SidebarDisplay';
 
 function Page_Manger_key() {
     const user = localStorage.getItem("username");
@@ -22,6 +23,7 @@ function Page_Manger_key() {
     }
     return (
         <div>
+            <SidebarDisplay />
             <div className="main_page-c">
                 <Item_add_key />
 

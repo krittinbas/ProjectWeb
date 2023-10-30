@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import SidebarIcon from '../Icon/SidebarIcon';
 import './Sidebar.css';
 
@@ -8,22 +8,23 @@ const Sidebar = () => {
   const toggleSidebar = () => {
     setIsOpen(!isOpen);
   };
-
+  const Nev = useNavigate();
+  
   return (
     <div>
       <SidebarIcon isOpen={isOpen} toggleSidebar={toggleSidebar} />
       <div className={isOpen ? 'sidebar-open' : 'sidebar-close'}>
-        <p>
-          <Link to="/DoorControl">Door Control</Link>
+        <p onClick={()=>Nev("/DoorControl")}>
+          Door Control
         </p>
-        <p>
-          <Link to="/KeyManager">Key Manager</Link>
+        <p onClick={()=>Nev("/KeyManager")}>
+         Key Manager
         </p>
-        <p>
-          <Link to="/KeyHost">Host Manager</Link>
+        <p onClick={()=>Nev("/KeyHost")}>
+          Host Manager
         </p>
-        <p>
-          <Link to="/history">User History</Link>
+        <p onClick={()=>Nev("/history")}>
+          User History
         </p>
       </div>
     </div>

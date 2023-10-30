@@ -13,7 +13,7 @@
   z-index: 9;
 }
 
-.sidebar-open a{
+.sidebar-open p{
   text-decoration: none;
   color: white;
   margin-left: 20px;
@@ -23,7 +23,7 @@
   border-color: white;
   background-color: chocolate;
 }
-.sidebar-open a:hover{
+.sidebar-open p:hover{
   color:aquamarine;
 }
 

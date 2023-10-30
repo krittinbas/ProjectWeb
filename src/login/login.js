@@ -41,6 +41,7 @@ function Login() {
                 localStorage.setItem("username", user)
                 localStorage.setItem("id", id)
                 localStorage.setItem("email", email1)
+                window.location.reload()
                 if (rememberMe) {
                     Cookies.set('remembered-username', email.current.value, { expires: 7 });
                     Cookies.set('remembered-password', pass.current.value, { expires: 7 });
@@ -74,7 +75,7 @@ function Login() {
                                 <input type="checkbox" checked={rememberMe}
                     onChange={() => setRememberMe(!rememberMe)}/>
                                 Remember me
-                            </label> <Link to = '/forgot'>Forgot Password</Link>
+                            </label> <Link to = '/forgetpass'>Forgot Password</Link>
                         </div>
                         <button type="submit" className="login-btn">
                             Login

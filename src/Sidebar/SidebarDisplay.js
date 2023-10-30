@@ -8,18 +8,8 @@ import Page_STATE from '../history/history';
 
 export default function SidebarDisplay(prop) {
   return (
-    <Router>
-      <div>
-        <Sidebar />
-        <div className="content">
-          <Routes>
-            <Route path="/DoorControl" element={<DoorControl />}></Route>
-            <Route path="/KeyManager" element={<Page_Manger_key />}></Route>
-            <Route path="/KeyHost" element={<OnlyHost />}></Route>
-            <Route path="/history" element={<Page_STATE />} />
-          </Routes>
-        </div>
-      </div>
-    </Router>
+    <div>
+      <Sidebar />
+    </div>
   );
 }

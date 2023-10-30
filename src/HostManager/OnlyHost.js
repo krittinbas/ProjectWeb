@@ -3,6 +3,7 @@ import './OnlyHost.css';
 import Card from './UI/Card';
 import SharedMember_Item from './SharedMemberItem/SharedMember_Item';
 import KeyGenerate from './KeyGenerate';
+import SidebarDisplay from '../Sidebar/SidebarDisplay';
 
 // HostManger.go
 export default function OnlyHost({ nickNameArray }) {
@@ -25,26 +26,29 @@ export default function OnlyHost({ nickNameArray }) {
     }, []);
 
     return (
-        <div className='onlyhost-body'>
-            <header className='onlyhost-header'>
-                <h1>Host Manager</h1>
-            </header>
+        <div>
+            <SidebarDisplay />
+            <div className='onlyhost-body'>
+                <header className='onlyhost-header'>
+                    <h1>Host Manager</h1>
+                </header>
 
-            <Card className="onlyhost-container">
-                <ul>
-                    {members.map(member => (
-                        <SharedMember_Item
-                            key={member.idaccountskey}
-                            email={member.email}
-                        />
-                    ))}
-                </ul>
-            </Card>
+                <Card className="onlyhost-container">
+                    <ul>
+                        {members.map(member => (
+                            <SharedMember_Item
+                                key={member.idaccountskey}
+                                email={member.email}
+                            />
+                        ))}
+                    </ul>
+                </Card>
 
-            <div className='new-expense'>
-                <KeyGenerate />
+                <div className='new-expense'>
+                    <KeyGenerate />
+                </div>
+
             </div>
-
         </div>
     );
 }
