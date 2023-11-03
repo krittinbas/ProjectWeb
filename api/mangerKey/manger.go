@@ -14,6 +14,7 @@ import (
 var MangerkeyDb *sql.DB
 
 func ChangeNickName(c *gin.Context) {
+	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	namechange := c.PostForm("name")
 	query := "UPDATE accounts_has_key SET nickname = ? WHERE id = ?"
@@ -26,6 +27,7 @@ func ChangeNickName(c *gin.Context) {
 }
 
 func GenKey(c *gin.Context) {
+	defer MangerkeyDb.Close()
 	min := 100000 // 6-digit number starts with 100000
 	max := 999999 // 6-digit number ends with 999999
 	randomNumber := rand.Intn(max-min+1) + min
@@ -43,6 +45,7 @@ func GenKey(c *gin.Context) {
 }
 
 func DeleteKey(c *gin.Context) {
+	defer MangerkeyDb.Close()
 	codeKey := c.PostForm("codeKeypp")
 	query := "UPDATE mykey SET shareKey = null WHERE (codeKey = ?);"
 	row := MangerkeyDb.QueryRow(query, codeKey)
@@ -55,6 +58,7 @@ func DeleteKey(c *gin.Context) {
 }
 
 func ConnectionKey(c *gin.Context) {
+	defer MangerkeyDb.Close()
 	keyKey := c.PostForm("key")
 	user := c.PostForm("user")
 	query1 := "select codeKey,shareKey,idhostkey,(select id from accounts where email= ?) from mykey where codeKey =? or shareKey =?"
@@ -111,6 +115,7 @@ func ConnectionKey(c *gin.Context) {
 }
 
 func Disconectkey(c *gin.Context) {
+	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	query := "select a.email,ll.mykey_codekey from accounts_has_key ll,accounts a where ll.id = ? and ll.accounts_id = a.id"
 	rw := MangerkeyDb.QueryRow(query, idaccountkey)

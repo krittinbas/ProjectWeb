@@ -81,6 +81,7 @@ func a(c *gin.Context) {
 }
 
 func loginHandler(c *gin.Context) {
+	defer Db.Close()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query := "SELECT id,email FROM accounts WHERE email = ? AND password = ?"
@@ -101,6 +102,7 @@ func loginHandler(c *gin.Context) {
 }
 
 func registor(c *gin.Context) {
+	defer Db.Close()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query1 := "SELECT email FROM accounts WHERE email = ?"
@@ -121,6 +123,7 @@ func registor(c *gin.Context) {
 	c.JSON(200, gin.H{"data": "success register"})
 }
 func Forgetpass(c *gin.Context) {
+	defer Db.Close()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query := "select email from accounts where email= ?"
@@ -137,6 +140,7 @@ func Forgetpass(c *gin.Context) {
 	c.JSON(200, gin.H{"data": "success"})
 }
 func infoAccount(c *gin.Context) {
+	defer Db.Close()
 	email := c.DefaultQuery("user", "")
 	query := "select ak.id,ak.nickname,K.codeKey,A.email as 'host',(select shareKey from mykey where idhostkey = B.id and k.codekey=codekey)as 'sharekey' from mykey K ,accounts_has_key ak,accounts A,accounts B where ak.accounts_id=b.id and K.codekey = ak.mykey_codekey and A.id = K.idhostkey and B.email = ?"
 	rows, err := Db.Query(query, email)
@@ -222,6 +226,7 @@ func infoAccount(c *gin.Context) {
 	})
 }
 func openclose(c *gin.Context) {
+	defer Db.Close()
 	codekey := c.DefaultQuery("codeKey", "")
 	state := c.DefaultQuery("state", "")
 	who := c.DefaultQuery("who", "")

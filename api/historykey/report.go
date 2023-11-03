@@ -9,6 +9,7 @@ import (
 var ReportDB *sql.DB
 
 func ReportSend(codeKey string, msg string) {
+	defer ReportDB.Close()
 	times := time.Now().Format("15:04:05")
 	dataNow := time.Now().Format("2006-01-02")
 	query := "INSERT INTO history (date, time, report, mykey_codeKey) VALUES (?, ?, ?, ?)"
