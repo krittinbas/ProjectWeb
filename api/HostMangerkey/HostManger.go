@@ -66,5 +66,5 @@ func Kick(c *gin.Context) {
 	}
 	row.Close()
 	c.JSON(200, gin.H{"data": "susees"})
-
+	historykey.ReportSend(codeKey, "Host kick "+encode.Decode(email))
 }

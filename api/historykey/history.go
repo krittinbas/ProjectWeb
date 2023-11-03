@@ -16,7 +16,7 @@ func GetHistory(c *gin.Context) {
 	row, err := HistoryDB.Query(query, codekey, rowHistory)
 	if err != nil {
 		// fmt.Println(err.Error())
-		c.JSON(500, gin.H{"error": "Internal server error"})
+		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 	dataHistory := make([]map[string]interface{}, 0)

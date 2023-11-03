@@ -4,6 +4,7 @@ import (
 	mydb "API/Database"
 	"API/configs"
 	"API/encode"
+	"API/esp"
 	"API/historykey"
 	HostMangerkey "API/hostMangerkey"
 	mangerkey "API/mangerKey"
@@ -23,6 +24,7 @@ func main() {
 	HostMangerkey.HostMangerDb = Db
 	historykey.HistoryDB = Db
 	historykey.ReportDB = Db
+	esp.ESPDB = Db
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
@@ -42,7 +44,9 @@ func main() {
 	r.GET("/history", historykey.GetHistory)
 	r.POST("/GenShareKey", mangerkey.GenKey)
 	r.POST("/GenDeleteKey", mangerkey.DeleteKey)
-
+	r.POST("/espOpenClose", esp.ESPOpenCloseServo)
+	r.POST("/espPIR", esp.ESPPIR)
+	r.GET("/espCheck", esp.ESPCheckServo)
 	r.GET("/openclose", openclose)
 	r.Run(":" + configs.PortAPI)
 
