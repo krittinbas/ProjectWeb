@@ -25,6 +25,7 @@ func main() {
 	historykey.HistoryDB = Db
 	historykey.ReportDB = Db
 	esp.ESPDB = Db
+	defer Db.Close()
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
