@@ -28,7 +28,7 @@ func main() {
 	}
 
 	r.Use(CORSMiddleware())
-
+	r.GET("/a", a)
 	r.POST("/login", loginHandler)
 	r.POST("/register", registor)
 	r.POST("/forgetpass", Forgetpass)
@@ -62,9 +62,21 @@ func CORSMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
+
+func a(c *gin.Context) {
+	email := c.DefaultQuery("eml", "")
+	password := c.DefaultQuery("pass", "")
+	query := "INSERT INTO accounts (email, password) VALUES (?,?)"
+	row := Db.QueryRow(query, email, password)
+	if row.Err() != nil {
+		c.JSON(401, gin.H{"error": row.Err().Error()})
+		return
+	}
+	c.JSON(200, gin.H{"email": email, "password": password, "data": "add in datebase"})
+}
+
 func loginHandler(c *gin.Context) {
 	email := encode.Encode(c.PostForm("email"))
-
 	password := encode.Encode(c.PostForm("password"))
 	query := "SELECT id,email FROM accounts WHERE email = ? AND password = ?"
 	row := Db.QueryRow(query, email, password)
@@ -106,13 +118,12 @@ func registor(c *gin.Context) {
 func Forgetpass(c *gin.Context) {
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
-	//check
 	query := "select email from accounts where email= ?"
 	getRow := Db.QueryRow(query, email)
 	var emailcheck string
 	x := getRow.Scan(&emailcheck)
 	if x != nil {
-		c.JSON(400, gin.H{"error": "no email"})
+		c.JSON(400, gin.H{"error": x.Error()})
 		return
 	}
 	query1 := "UPDATE accounts SET password = ?	WHERE email = ?"
@@ -151,7 +162,6 @@ func infoAccount(c *gin.Context) {
 		}
 		thishostkey := true
 		if email != hostemail {
-			codeKey = encode.Decode(hostemail)
 			thishostkey = false
 		} else {
 			hostkey = true
@@ -175,12 +185,13 @@ func infoAccount(c *gin.Context) {
 			"mykeystatus":   mykeystatus,
 		}
 		rowData := map[string]interface{}{
-			"id":       id,
-			"nickname": nickname.String,
-			"codeKey":  codeKey,
-			"shareKey": shareKey.String,
-			"isHost":   thishostkey,
-			"statekey": keyState,
+			"id":        id,
+			"nickname":  nickname.String,
+			"codeKey":   codeKey,
+			"emailHOST": encode.Decode(hostemail),
+			"shareKey":  shareKey.String,
+			"isHost":    thishostkey,
+			"statekey":  keyState,
 		}
 
 		dataListKey = append(dataListKey, rowData)

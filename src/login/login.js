@@ -5,9 +5,8 @@ import React, { useState } from 'react';
 import Cookies from 'js-cookie';
 import { Link, NavLink, Navigate, useNavigate } from 'react-router-dom';
 
-
 function Login() {
-    
+
     const email = useRef("")
     const check = useRef(null)
     const pass = useRef("")
@@ -29,31 +28,30 @@ function Login() {
             },
             body: formData.toString()
         })
-        .then(response=>response.json())
-        .then(data=>{
-            if (data.error) {
-                alert(data.error);
-            }else{
-                email1 = data.email
-                user = data.user
-                id = data.id
-                nav("/DoorControl")
-                localStorage.setItem("username", user)
-                localStorage.setItem("id", id)
-                localStorage.setItem("email", email1)
-                window.location.reload()
-                if (rememberMe) {
-                    Cookies.set('remembered-username', email.current.value, { expires: 7 });
-                    Cookies.set('remembered-password', pass.current.value, { expires: 7 });
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    email1 = data.email
+                    user = data.user
+                    id = data.id
+                    nav("/DoorControl")
+                    localStorage.setItem("username", user)
+                    localStorage.setItem("id", id)
+                    localStorage.setItem("email", email1)
+                    window.location.reload()
+                    if (rememberMe) {
+                        Cookies.set('remembered-username', email.current.value, { expires: 7 });
+                        Cookies.set('remembered-password', pass.current.value, { expires: 7 });
+                    }
                 }
-            }
-        })
+            })
     }
     return (
         <div className="login-body">
             <div className="login-header">
                 <h1 className="login-logo">
-                    
                 </h1>
             </div>
             <div className="login-wrapepr">
@@ -73,9 +71,9 @@ function Login() {
                         <div className="login-remember-forgot">
                             <label>
                                 <input type="checkbox" checked={rememberMe}
-                    onChange={() => setRememberMe(!rememberMe)}/>
+                                    onChange={() => setRememberMe(!rememberMe)} />
                                 Remember me
-                            </label> <Link to = '/forgetpass'>Forgot Password</Link>
+                            </label> <Link to='/forgetpass'>Forgot Password</Link>
                         </div>
                         <button type="submit" className="login-btn">
                             Login
@@ -83,7 +81,7 @@ function Login() {
                         <div className="login-register">
                             <p>
                                 Don't have an accout?
-                                <Link to = '/register' className="login-register-link">
+                                <Link to='/register' className="login-register-link">
                                     Register
                                 </Link>
                             </p>
