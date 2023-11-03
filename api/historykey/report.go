@@ -1,6 +1,7 @@
 package historykey
 
 import (
+	"API/Database"
 	"database/sql"
 	"fmt"
 	"time"
@@ -9,6 +10,7 @@ import (
 var ReportDB *sql.DB
 
 func ReportSend(codeKey string, msg string) {
+	ReportDB, _ = Database.GetDB()
 	defer ReportDB.Close()
 	times := time.Now().Format("15:04:05")
 	dataNow := time.Now().Format("2006-01-02")
