@@ -16,8 +16,8 @@ function Login() {
     let email1
     let user
     let id
-    const login = (e) => {
-        e.preventDefault();
+    const login = () => {
+       
         const formData = new URLSearchParams();
         formData.append('email', email.current.value);
         formData.append('password', pass.current.value);
