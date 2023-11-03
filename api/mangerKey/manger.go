@@ -2,6 +2,7 @@ package mangerkey
 
 import (
 	"API/encode"
+	"API/historykey"
 	"database/sql"
 	"math/rand"
 	"strconv"
@@ -37,6 +38,7 @@ func GenKey(c *gin.Context) {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
+	historykey.ReportSend(codeKey, "Host genarete sherekey :****"+strNum[5:])
 	c.JSON(200, gin.H{"status": 200, "shareKey": strNum}) //we can use shareKey in react
 }
 
@@ -48,6 +50,7 @@ func DeleteKey(c *gin.Context) {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
+	historykey.ReportSend(codeKey, "Host Delete shereKey")
 	c.JSON(200, gin.H{"status": 200}) //we can use shareKey in react
 }
 
@@ -84,6 +87,7 @@ func ConnectionKey(c *gin.Context) {
 			return
 		}
 		c.JSON(200, gin.H{"status": 200})
+		historykey.ReportSend(codeKey, "Host join")
 		return
 	}
 	//connect from shareKey
@@ -99,6 +103,7 @@ func ConnectionKey(c *gin.Context) {
 			return
 		}
 		c.JSON(200, gin.H{"status": 200})
+		historykey.ReportSend(codeKey, encode.Decode(user)+" join Key with sherekey ****"+shareKey.String)
 		return
 	} else {
 		c.JSON(500, gin.H{"error": "Invalid Key in server. Please try again."})
@@ -107,11 +112,17 @@ func ConnectionKey(c *gin.Context) {
 
 func Disconectkey(c *gin.Context) {
 	idaccountkey := c.PostForm("idaccountkey")
-	query := "DELETE FROM accounts_has_key WHERE id = ?"
+	query := "select a.email,ll.mykey_codekey from accounts_has_key ll,accounts a where ll.id = ? and ll.accounts_id = a.id"
+	rw := MangerkeyDb.QueryRow(query, idaccountkey)
+	var email string
+	var codekey string
+	rw.Scan(&email, &codekey)
+	query = "DELETE FROM accounts_has_key WHERE id = ?"
 	row := MangerkeyDb.QueryRow(query, idaccountkey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": "Server api error disconnect"})
 		return
 	}
 	c.JSON(200, gin.H{"status": 200, "data": "disconnected!"})
+	historykey.ReportSend(codekey, encode.Decode(email)+" disconnect key")
 }
