@@ -11,6 +11,7 @@ import (
 var HostMangerDb *sql.DB
 
 func ListMemberJoinkey(c *gin.Context) {
+	defer HostMangerDb.Close()
 	codeKey := c.DefaultQuery("codeKey", "")
 	query := "select A.email,AK.id from accounts_has_key AK,accounts A,mykey MK where AK.mykey_codeKey = MK.codeKey and Mk.codeKey= ? and A.id = AK.accounts_id and MK.idhostkey != A.id;"
 	row, err := HostMangerDb.Query(query, codeKey)
@@ -37,6 +38,7 @@ func ListMemberJoinkey(c *gin.Context) {
 	c.JSON(200, gin.H{"data": MenbersList})
 }
 func TranferHost(c *gin.Context) {
+	defer HostMangerDb.Close()
 	email := encode.Encode(c.PostForm("email"))
 	codeKey := c.PostForm("codeKey")
 	query := "UPDATE mykey set idhostkey= (select id from accounts where email = ?) where codeKey = ?"
@@ -51,6 +53,7 @@ func TranferHost(c *gin.Context) {
 }
 
 func Kick(c *gin.Context) {
+	defer HostMangerDb.Close()
 	idaccountskey := c.PostForm("idaccountskey")
 	query := "select mykey_codekey , (select email from accounts where id = accounts_id) from accounts_has_key where id = ?"
 	rows := HostMangerDb.QueryRow(query, idaccountskey)

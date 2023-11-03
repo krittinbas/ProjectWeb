@@ -9,6 +9,7 @@ import (
 var HistoryDB *sql.DB
 
 func GetHistory(c *gin.Context) {
+	defer HistoryDB.Close()
 	codekey := c.DefaultQuery("codeKey", "")
 
 	rowHistory := c.DefaultQuery("row", "")

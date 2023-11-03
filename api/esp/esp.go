@@ -11,6 +11,7 @@ import (
 var ESPDB *sql.DB
 
 func ESPCheckServo(c *gin.Context) {
+	defer ESPDB.Close()
 	codekey := c.DefaultQuery("codeKey", "")
 	query := "select keystatus from mystate where mykey_codeKey = ?"
 	row := ESPDB.QueryRow(query, codekey)
@@ -24,6 +25,7 @@ func ESPCheckServo(c *gin.Context) {
 	c.JSON(200, state)
 }
 func ESPOpenCloseServo(c *gin.Context) {
+	defer ESPDB.Close()
 	codekey := c.PostForm("codeKey")
 	typedo := c.PostForm("type")
 	var tpyePInt int
@@ -51,6 +53,7 @@ func ESPOpenCloseServo(c *gin.Context) {
 }
 
 func ESPPIR(c *gin.Context) {
+	defer ESPDB.Close()
 	codekey := c.PostForm("codeKey")
 	value := c.PostForm("value")
 	query := "UPDATE mystate SET nowCloserDoor = ? WHERE (mykey_codeKey = ?)"
