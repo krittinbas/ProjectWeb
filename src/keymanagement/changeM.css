@@ -1,16 +1,17 @@
 @import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&display=swap');
 
-.contrainer-changeM-name-m{
+.contrainer-changeM-name-m {
     display: flex;
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
 
 }
-.contrainer-changeM-name-m a{
+
+.contrainer-changeM-name-m a {
     display: flex;
     flex-direction: column;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     color: white;
     font-weight: 600;
@@ -18,42 +19,47 @@
     text-shadow: 0 0 0 #9E9E9E;
     font-size: 18px;
 }
-.contrainer-changeM-name{
+
+.contrainer-changeM-name {
     display: flex;
     flex-direction: row;
     padding: 20px;
-    gap : 20px;
-    justify-content:center;
+    gap: 20px;
+    justify-content: center;
     align-items: center;
 }
 
-.contrainer-changeM-name input{
+.contrainer-changeM-name input {
     border-radius: 10px;
     height: 25px;
     border: 1px solid black;
     padding: 10px;
 }
-.buttonc{
+
+.buttonc {
     padding: 10px;
-    background-color: rgb(80, 151, 243);
+    background-color: chocolate;
     border-radius: 6px;
     border: 1px solid black;
     color: white;
 }
-.buttonc:hover{
+
+.buttonc:hover {
     padding: 10px;
     background-color: rgb(124, 177, 241);
     border-radius: 6px;
     border: 1px solid black;
 }
-.buttonD{
+
+.buttonD {
     padding: 10px;
     background-color: rgb(223, 0, 0);
     border-radius: 6px;
     border: 1px solid black;
     color: white;
 }
-.buttonD:hover{
+
+.buttonD:hover {
     padding: 10px;
     background-color: rgb(182, 27, 27);
     border-radius: 6px;
