@@ -1,6 +1,7 @@
 package mangerkey
 
 import (
+	"API/Database"
 	"API/encode"
 	"API/historykey"
 	"database/sql"
@@ -14,6 +15,7 @@ import (
 var MangerkeyDb *sql.DB
 
 func ChangeNickName(c *gin.Context) {
+	MangerkeyDb, _ = Database.GetDB()
 	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	namechange := c.PostForm("name")
@@ -27,6 +29,7 @@ func ChangeNickName(c *gin.Context) {
 }
 
 func GenKey(c *gin.Context) {
+	MangerkeyDb, _ = Database.GetDB()
 	defer MangerkeyDb.Close()
 	min := 100000 // 6-digit number starts with 100000
 	max := 999999 // 6-digit number ends with 999999
@@ -45,6 +48,7 @@ func GenKey(c *gin.Context) {
 }
 
 func DeleteKey(c *gin.Context) {
+	MangerkeyDb, _ = Database.GetDB()
 	defer MangerkeyDb.Close()
 	codeKey := c.PostForm("codeKeypp")
 	query := "UPDATE mykey SET shareKey = null WHERE (codeKey = ?);"
@@ -58,6 +62,7 @@ func DeleteKey(c *gin.Context) {
 }
 
 func ConnectionKey(c *gin.Context) {
+	MangerkeyDb, _ = Database.GetDB()
 	defer MangerkeyDb.Close()
 	keyKey := c.PostForm("key")
 	user := c.PostForm("user")
@@ -115,6 +120,7 @@ func ConnectionKey(c *gin.Context) {
 }
 
 func Disconectkey(c *gin.Context) {
+	MangerkeyDb, _ = Database.GetDB()
 	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	query := "select a.email,ll.mykey_codekey from accounts_has_key ll,accounts a where ll.id = ? and ll.accounts_id = a.id"

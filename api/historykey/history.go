@@ -1,6 +1,7 @@
 package historykey
 
 import (
+	"API/Database"
 	"database/sql"
 
 	"github.com/gin-gonic/gin"
@@ -9,6 +10,7 @@ import (
 var HistoryDB *sql.DB
 
 func GetHistory(c *gin.Context) {
+	HistoryDB, _ = Database.GetDB()
 	defer HistoryDB.Close()
 	codekey := c.DefaultQuery("codeKey", "")
 
