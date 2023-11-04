@@ -27,7 +27,6 @@ func main() {
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
-
 	r.Use(CORSMiddleware())
 	r.POST("/login", loginHandler)
 	r.POST("/register", registor)
@@ -140,7 +139,6 @@ func infoAccount(c *gin.Context) {
 			"error":      err.Error()})
 		return
 	}
-	defer rows.Close()
 	dataListKey := make([]map[string]interface{}, 0)
 	dataListKeyHost := make([]map[string]interface{}, 0)
 	hostkey := false
@@ -168,11 +166,14 @@ func infoAccount(c *gin.Context) {
 			}
 			dataListKeyHost = append(dataListKeyHost, keyhost)
 		}
+
 		queryState := "select countuse,nowCloserDoor,keystatus from mystate where mykey_codekey = ?"
 		getRow, _ := Db.Query(queryState, codeKey)
+
 		var countuse int
 		var nowCloserDoor int
 		var mykeystatus int
+		getRow.Next()
 		getRow.Scan(&countuse, &nowCloserDoor, &mykeystatus)
 		getRow.Close()
 		keyState := map[string]interface{}{
