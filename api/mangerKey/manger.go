@@ -16,7 +16,6 @@ var MangerkeyDb *sql.DB
 
 func ChangeNickName(c *gin.Context) {
 	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	namechange := c.PostForm("name")
 	query := "UPDATE accounts_has_key SET nickname = ? WHERE id = ?"
@@ -26,11 +25,11 @@ func ChangeNickName(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"status": 200, "data": "You change name is " + namechange})
+	MangerkeyDb.Close()
 }
 
 func GenKey(c *gin.Context) {
 	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	min := 100000 // 6-digit number starts with 100000
 	max := 999999 // 6-digit number ends with 999999
 	randomNumber := rand.Intn(max-min+1) + min
@@ -45,11 +44,11 @@ func GenKey(c *gin.Context) {
 	}
 	historykey.ReportSend(codeKey, "Host genarete sherekey :****"+strNum[5:])
 	c.JSON(200, gin.H{"status": 200, "shareKey": strNum}) //we can use shareKey in react
+	MangerkeyDb.Close()
 }
 
 func DeleteKey(c *gin.Context) {
 	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	codeKey := c.PostForm("codeKeypp")
 	query := "UPDATE mykey SET shareKey = null WHERE (codeKey = ?);"
 	row := MangerkeyDb.QueryRow(query, codeKey)
@@ -59,11 +58,11 @@ func DeleteKey(c *gin.Context) {
 	}
 	historykey.ReportSend(codeKey, "Host Delete shereKey")
 	c.JSON(200, gin.H{"status": 200}) //we can use shareKey in react
+	MangerkeyDb.Close()
 }
 
 func ConnectionKey(c *gin.Context) {
 	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	keyKey := c.PostForm("key")
 	user := c.PostForm("user")
 	query1 := "select codeKey,shareKey,idhostkey,(select id from accounts where email= ?) from mykey where codeKey =? or shareKey =?"
@@ -117,11 +116,11 @@ func ConnectionKey(c *gin.Context) {
 	} else {
 		c.JSON(500, gin.H{"error": "Invalid Key in server. Please try again."})
 	}
+	MangerkeyDb.Close()
 }
 
 func Disconectkey(c *gin.Context) {
 	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	query := "select a.email,ll.mykey_codekey from accounts_has_key ll,accounts a where ll.id = ? and ll.accounts_id = a.id"
 	rw := MangerkeyDb.QueryRow(query, idaccountkey)
@@ -136,4 +135,5 @@ func Disconectkey(c *gin.Context) {
 	}
 	c.JSON(200, gin.H{"status": 200, "data": "disconnected!"})
 	historykey.ReportSend(codekey, encode.Decode(email)+" disconnect key")
+	MangerkeyDb.Close()
 }

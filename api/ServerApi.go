@@ -1,6 +1,7 @@
 package main
 
 import (
+	"API/Database"
 	mydb "API/Database"
 	"API/configs"
 	"API/encode"
@@ -24,14 +25,16 @@ func main() {
 	HostMangerkey.HostMangerDb = Db
 	historykey.HistoryDB = Db
 	historykey.ReportDB = Db
+<<<<<<< HEAD
 	esp.ESPDB = Db
 	defer Db.Close()
+=======
+>>>>>>> d7fa5df065b67566962414bdda2dd68102cac2d4
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
 
 	r.Use(CORSMiddleware())
-	r.GET("/a", a)
 	r.POST("/login", loginHandler)
 	r.POST("/register", registor)
 	r.POST("/forgetpass", Forgetpass)
@@ -67,22 +70,8 @@ func CORSMiddleware() gin.HandlerFunc {
 		c.Next()
 	}
 }
-
-func a(c *gin.Context) {
-	email := c.DefaultQuery("eml", "")
-	password := c.DefaultQuery("pass", "")
-	query := "INSERT INTO accounts (email, password) VALUES (?,?)"
-	row := Db.QueryRow(query, email, password)
-	if row.Err() != nil {
-		c.JSON(401, gin.H{"error": row.Err().Error()})
-		return
-	}
-	c.JSON(200, gin.H{"email": email, "password": password, "data": "add in datebase"})
-}
-
 func loginHandler(c *gin.Context) {
-	Db, _ = mydb.GetDB()
-	defer Db.Close()
+	Db, _ = Database.GetDB()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query := "SELECT id,email FROM accounts WHERE email = ? AND password = ?"
@@ -100,11 +89,11 @@ func loginHandler(c *gin.Context) {
 		"id":    id,
 		"email": encode.Decode(emails),
 	})
+	Db.Close()
 }
 
 func registor(c *gin.Context) {
-	Db, _ = mydb.GetDB()
-	defer Db.Close()
+	Db, _ = Database.GetDB()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query1 := "SELECT email FROM accounts WHERE email = ?"
@@ -123,10 +112,10 @@ func registor(c *gin.Context) {
 		return
 	}
 	c.JSON(200, gin.H{"data": "success register"})
+	Db.Close()
 }
 func Forgetpass(c *gin.Context) {
-	Db, _ = mydb.GetDB()
-	defer Db.Close()
+	Db, _ = Database.GetDB()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query := "select email from accounts where email= ?"
@@ -141,10 +130,10 @@ func Forgetpass(c *gin.Context) {
 	getRow = Db.QueryRow(query1, password, email)
 
 	c.JSON(200, gin.H{"data": "success"})
+	Db.Close()
 }
 func infoAccount(c *gin.Context) {
-	Db, _ = mydb.GetDB()
-	defer Db.Close()
+	Db, _ = Database.GetDB()
 	email := c.DefaultQuery("user", "")
 	query := "select ak.id,ak.nickname,K.codeKey,A.email as 'host',(select shareKey from mykey where idhostkey = B.id and k.codekey=codekey)as 'sharekey' from mykey K ,accounts_has_key ak,accounts A,accounts B where ak.accounts_id=b.id and K.codekey = ak.mykey_codekey and A.id = K.idhostkey and B.email = ?"
 	rows, err := Db.Query(query, email)
@@ -228,10 +217,10 @@ func infoAccount(c *gin.Context) {
 		"isHostKey":  hostkey,
 		"HostKey":    dataListKeyHost,
 	})
+	Db.Close()
 }
 func openclose(c *gin.Context) {
-	Db, _ = mydb.GetDB()
-	defer Db.Close()
+	Db, _ = Database.GetDB()
 	codekey := c.DefaultQuery("codeKey", "")
 	state := c.DefaultQuery("state", "")
 	who := c.DefaultQuery("who", "")
@@ -248,5 +237,5 @@ func openclose(c *gin.Context) {
 	}
 	historykey.ReportSend(codekey, fmt.Sprintf("%s close door", who))
 	c.JSON(200, "close")
-
+	Db.Close()
 }
