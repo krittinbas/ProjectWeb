@@ -1,7 +1,6 @@
 package main
 
 import (
-	"API/Database"
 	mydb "API/Database"
 	"API/configs"
 	"API/encode"
@@ -25,11 +24,6 @@ func main() {
 	HostMangerkey.HostMangerDb = Db
 	historykey.HistoryDB = Db
 	historykey.ReportDB = Db
-<<<<<<< HEAD
-	esp.ESPDB = Db
-	defer Db.Close()
-=======
->>>>>>> d7fa5df065b67566962414bdda2dd68102cac2d4
 	if err != nil {
 		fmt.Println("Error Database Connection!")
 	}
@@ -71,33 +65,33 @@ func CORSMiddleware() gin.HandlerFunc {
 	}
 }
 func loginHandler(c *gin.Context) {
-	Db, _ = Database.GetDB()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query := "SELECT id,email FROM accounts WHERE email = ? AND password = ?"
-	row := Db.QueryRow(query, email, password)
-
+	row, _ := Db.Query(query, email, password)
 	var id int
 	var emails string
+	row.Next()
 	err := row.Scan(&id, &emails)
 	if err != nil {
 		c.JSON(401, gin.H{"error": "Invalid email or password. Please try again."})
+		fmt.Println(err.Error())
 		return
 	}
+
 	c.JSON(200, gin.H{
 		"user":  emails,
 		"id":    id,
 		"email": encode.Decode(emails),
 	})
-	Db.Close()
+	row.Close()
 }
 
 func registor(c *gin.Context) {
-	Db, _ = Database.GetDB()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query1 := "SELECT email FROM accounts WHERE email = ?"
-	getRow := Db.QueryRow(query1, email)
+	getRow, _ := Db.Query(query1, email)
 	var xxx string
 	fmt.Println(xxx)
 	getRow.Scan(&xxx)
@@ -105,21 +99,21 @@ func registor(c *gin.Context) {
 		c.JSON(409, gin.H{"error": "This email has been registered already!"})
 		return
 	}
+	getRow.Close()
 	query := "INSERT INTO accounts (email, password) VALUES (?,?)"
-	row := Db.QueryRow(query, email, password)
+	row, _ := Db.Query(query, email, password)
 	if row.Err() != nil {
 		c.JSON(401, gin.H{"error": row.Err().Error()})
 		return
 	}
 	c.JSON(200, gin.H{"data": "success register"})
-	Db.Close()
+	row.Close()
 }
 func Forgetpass(c *gin.Context) {
-	Db, _ = Database.GetDB()
 	email := encode.Encode(c.PostForm("email"))
 	password := encode.Encode(c.PostForm("password"))
 	query := "select email from accounts where email= ?"
-	getRow := Db.QueryRow(query, email)
+	getRow, _ := Db.Query(query, email)
 	var emailcheck string
 	x := getRow.Scan(&emailcheck)
 	if x != nil {
@@ -127,13 +121,12 @@ func Forgetpass(c *gin.Context) {
 		return
 	}
 	query1 := "UPDATE accounts SET password = ?	WHERE email = ?"
-	getRow = Db.QueryRow(query1, password, email)
+	getRow, _ = Db.Query(query1, password, email)
 
 	c.JSON(200, gin.H{"data": "success"})
-	Db.Close()
+	getRow.Close()
 }
 func infoAccount(c *gin.Context) {
-	Db, _ = Database.GetDB()
 	email := c.DefaultQuery("user", "")
 	query := "select ak.id,ak.nickname,K.codeKey,A.email as 'host',(select shareKey from mykey where idhostkey = B.id and k.codekey=codekey)as 'sharekey' from mykey K ,accounts_has_key ak,accounts A,accounts B where ak.accounts_id=b.id and K.codekey = ak.mykey_codekey and A.id = K.idhostkey and B.email = ?"
 	rows, err := Db.Query(query, email)
@@ -176,11 +169,12 @@ func infoAccount(c *gin.Context) {
 			dataListKeyHost = append(dataListKeyHost, keyhost)
 		}
 		queryState := "select countuse,nowCloserDoor,keystatus from mystate where mykey_codekey = ?"
-		getRow := Db.QueryRow(queryState, codeKey)
+		getRow, _ := Db.Query(queryState, codeKey)
 		var countuse int
 		var nowCloserDoor int
 		var mykeystatus int
 		getRow.Scan(&countuse, &nowCloserDoor, &mykeystatus)
+		getRow.Close()
 		keyState := map[string]interface{}{
 			"countuse":      countuse,
 			"nowCloserDoor": nowCloserDoor,
@@ -217,15 +211,14 @@ func infoAccount(c *gin.Context) {
 		"isHostKey":  hostkey,
 		"HostKey":    dataListKeyHost,
 	})
-	Db.Close()
 }
 func openclose(c *gin.Context) {
-	Db, _ = Database.GetDB()
 	codekey := c.DefaultQuery("codeKey", "")
 	state := c.DefaultQuery("state", "")
 	who := c.DefaultQuery("who", "")
 	query := "UPDATE mystate SET keystatus = ?,countuse = countuse + 1 WHERE (mykey_codekey =?)"
-	row := Db.QueryRow(query, state, codekey)
+	row, _ := Db.Query(query, state, codekey)
+	row.Close()
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
@@ -237,5 +230,4 @@ func openclose(c *gin.Context) {
 	}
 	historykey.ReportSend(codekey, fmt.Sprintf("%s close door", who))
 	c.JSON(200, "close")
-	Db.Close()
 }
