@@ -15,6 +15,6 @@ func GetDB() (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	db.SetMaxOpenConns(50)
 	return db, nil
 }

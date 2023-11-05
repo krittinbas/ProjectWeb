@@ -1,7 +1,6 @@
 package mangerkey
 
 import (
-	"API/Database"
 	"API/encode"
 	"API/historykey"
 	"database/sql"
@@ -15,22 +14,19 @@ import (
 var MangerkeyDb *sql.DB
 
 func ChangeNickName(c *gin.Context) {
-	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	namechange := c.PostForm("name")
 	query := "UPDATE accounts_has_key SET nickname = ? WHERE id = ?"
-	row := MangerkeyDb.QueryRow(query, namechange, idaccountkey)
+	row, _ := MangerkeyDb.Query(query, namechange, idaccountkey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
 	c.JSON(200, gin.H{"status": 200, "data": "You change name is " + namechange})
+	row.Close()
 }
 
 func GenKey(c *gin.Context) {
-	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	min := 100000 // 6-digit number starts with 100000
 	max := 999999 // 6-digit number ends with 999999
 	randomNumber := rand.Intn(max-min+1) + min
@@ -38,36 +34,34 @@ func GenKey(c *gin.Context) {
 
 	codeKey := c.PostForm("codeKeypp")
 	query := "UPDATE mykey SET shareKey = ? WHERE (codeKey = ?);"
-	row := MangerkeyDb.QueryRow(query, strNum, codeKey)
+	row, _ := MangerkeyDb.Query(query, strNum, codeKey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
 	historykey.ReportSend(codeKey, "Host genarete sherekey :****"+strNum[5:])
 	c.JSON(200, gin.H{"status": 200, "shareKey": strNum}) //we can use shareKey in react
+	row.Close()
 }
 
 func DeleteKey(c *gin.Context) {
-	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	codeKey := c.PostForm("codeKeypp")
 	query := "UPDATE mykey SET shareKey = null WHERE (codeKey = ?);"
-	row := MangerkeyDb.QueryRow(query, codeKey)
+	row, _ := MangerkeyDb.Query(query, codeKey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": row.Err().Error()})
 		return
 	}
 	historykey.ReportSend(codeKey, "Host Delete shereKey")
 	c.JSON(200, gin.H{"status": 200}) //we can use shareKey in react
+	row.Close()
 }
 
 func ConnectionKey(c *gin.Context) {
-	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	keyKey := c.PostForm("key")
 	user := c.PostForm("user")
 	query1 := "select codeKey,shareKey,idhostkey,(select id from accounts where email= ?) from mykey where codeKey =? or shareKey =?"
-	row := MangerkeyDb.QueryRow(query1, user, keyKey, keyKey)
+	row, _ := MangerkeyDb.Query(query1, user, keyKey, keyKey)
 	var shareKey sql.NullString
 	var idhostkey sql.NullInt16
 	var codeKey string
@@ -80,23 +74,25 @@ func ConnectionKey(c *gin.Context) {
 	times := time.Now().Format("15:04:05")
 	dataNow := time.Now().Format("2006-01-02")
 	idaccountkey := encode.Encode(user + times + dataNow)
+	row.Close()
 	//host key
 	if (idhostkey == sql.NullInt16{}) {
 		query2 := "UPDATE mykey SET idhostkey = ? WHERE codekey = ?"
-		row := MangerkeyDb.QueryRow(query2, id, codeKey)
+		row, _ := MangerkeyDb.Query(query2, id, codeKey)
 		if row.Err() != nil {
 			c.JSON(500, gin.H{"error": "Error in server. Please try again."})
 			return
 		}
-
+		row.Close()
 		query3 := "INSERT INTO accounts_has_key (id,accounts_id, mykey_codeKey) VALUES (?,?, ?);"
-		row1 := MangerkeyDb.QueryRow(query3, idaccountkey, id, codeKey)
+		row1, _ := MangerkeyDb.Query(query3, idaccountkey, id, codeKey)
 		if row1.Err() != nil {
 			c.JSON(500, gin.H{"error": "Error in server. Please try again."})
 			return
 		}
 		c.JSON(200, gin.H{"status": 200})
 		historykey.ReportSend(codeKey, "Host join")
+		row1.Close()
 		return
 	}
 	//connect from shareKey
@@ -106,13 +102,14 @@ func ConnectionKey(c *gin.Context) {
 			return
 		}
 		query3 := "INSERT INTO accounts_has_key (id,accounts_id, mykey_codeKey) VALUES (?,?, ?);"
-		row2 := MangerkeyDb.QueryRow(query3, idaccountkey, id, codeKey)
+		row2, _ := MangerkeyDb.Query(query3, idaccountkey, id, codeKey)
 		if row2.Err() != nil {
 			c.JSON(500, gin.H{"error": "This key is connected. Please dont put it add"})
 			return
 		}
 		c.JSON(200, gin.H{"status": 200})
 		historykey.ReportSend(codeKey, encode.Decode(user)+" join Key with sherekey ****"+shareKey.String)
+		row2.Close()
 		return
 	} else {
 		c.JSON(500, gin.H{"error": "Invalid Key in server. Please try again."})
@@ -120,20 +117,20 @@ func ConnectionKey(c *gin.Context) {
 }
 
 func Disconectkey(c *gin.Context) {
-	MangerkeyDb, _ = Database.GetDB()
-	defer MangerkeyDb.Close()
 	idaccountkey := c.PostForm("idaccountkey")
 	query := "select a.email,ll.mykey_codekey from accounts_has_key ll,accounts a where ll.id = ? and ll.accounts_id = a.id"
-	rw := MangerkeyDb.QueryRow(query, idaccountkey)
+	rw, _ := MangerkeyDb.Query(query, idaccountkey)
 	var email string
 	var codekey string
 	rw.Scan(&email, &codekey)
+	rw.Close()
 	query = "DELETE FROM accounts_has_key WHERE id = ?"
-	row := MangerkeyDb.QueryRow(query, idaccountkey)
+	row, _ := MangerkeyDb.Query(query, idaccountkey)
 	if row.Err() != nil {
 		c.JSON(500, gin.H{"error": "Server api error disconnect"})
 		return
 	}
 	c.JSON(200, gin.H{"status": 200, "data": "disconnected!"})
 	historykey.ReportSend(codekey, encode.Decode(email)+" disconnect key")
+	row.Close()
 }
